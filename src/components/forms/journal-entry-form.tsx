@@ -20,7 +20,16 @@ export function JournalEntryForm() {
     <form onSubmit={form.handleSubmit((values) => create.mutate(values))} className="space-y-4 rounded-lg border p-4">
       <div className="space-y-2">
         <Label htmlFor="status">Status</Label>
-        <Input id="status" placeholder="Watching" {...form.register("status")} />
+        <select
+          id="status"
+          className="flex h-10 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none ring-violet-300 focus-visible:ring-2"
+          {...form.register("status")}
+        >
+          <option value="Watching">Watching</option>
+          <option value="Completed">Completed</option>
+          <option value="Dropped">Dropped</option>
+          <option value="Plan to Watch">Plan to Watch</option>
+        </select>
       </div>
       <div className="space-y-2">
         <Label htmlFor="progress">Progress</Label>
