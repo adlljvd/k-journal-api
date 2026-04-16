@@ -1,34 +1,20 @@
-# K-Journal Frontend
-
-K-Journal is a modern journaling platform for K-Dramas and K-Movies built with:
-
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
-- shadcn/ui-style reusable components
-- Redux Toolkit
-- TanStack Query
-- Axios
-- React Hook Form + Zod
-- Framer Motion
+# K-Journal API
 
 ## Setup
 
 ```bash
 npm install
-cp .env.example .env.local
-npm run dev
+cp .env.example .env
+npm run prisma:generate
+npm run prisma:migrate
+npm run start:dev
 ```
 
-Open http://localhost:3000.
+## Endpoints
 
-## Routes
-
-- `/` Home
-- `/explore`
-- `/content/[id]`
-- `/journal`
-- `/profile` (private profile UI)
-- `/u/[username]` (public profile)
-- `/login`
-- `/register`
+- `GET /`
+- `GET /health`
+- `GET /health/live`
+- `GET /health/ready`
+- `GET /users`
+- `POST /users` body: `{ "email": "...", "name": "..." }`
