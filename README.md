@@ -16,5 +16,8 @@ npm run start:dev
 - `GET /health`
 - `GET /health/live`
 - `GET /health/ready`
+- `POST /auth/register` body: `{ "email": "...", "password": "...", "name": "..." }`
+- `POST /auth/login` body: `{ "email": "...", "password": "..." }`
 - `GET /users`
-- `POST /users` body: `{ "email": "...", "name": "..." }`
+
+`GET /users` requires `Authorization: Bearer <token>`
