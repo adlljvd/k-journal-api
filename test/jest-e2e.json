@@ -1,0 +1,29 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "..",
+  "testEnvironment": "node",
+  "testRegex": ".*\\.e2e-spec\\.ts$|.*\\.spec\\.ts$",
+  "globalSetup": "<rootDir>/test/global-setup.ts",
+  "transform": {
+    "^.+\\.(t|j)s$": ["ts-jest", {
+      "tsconfig": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "resolvePackageJsonExports": false
+      }
+    }]
+  },
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1",
+    "^../../src/(.*)$": "<rootDir>/src/$1",
+    "^../src/(.*)$": "<rootDir>/src/$1",
+    "^../helpers$": "<rootDir>/test/helpers"
+  },
+  "transformIgnorePatterns": [
+    "node_modules/(?!(uuid|@nestjs|class-transformer|class-validator|rxjs|reflect-metadata)/)"
+  ]
+}

@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Journal - Journaling Wireframes</title>
+  <link rel="stylesheet" href="_shared.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Content Card Styles */
+    .content-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-wire-border);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .content-card-poster {
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 48px;
+    }
+    .content-card-body {
+      padding: 12px;
+    }
+    
+    /* Rating Stars */
+    .rating-stars {
+      color: #f59e0b;
+      letter-spacing: -2px;
+    }
+    .rating-stars-empty {
+      color: #d1d5db;
+      letter-spacing: -2px;
+    }
+    
+    /* Journal Entry Card */
+    .journal-entry-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      transition: box-shadow 0.15s;
+    }
+    .journal-entry-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .journal-entry-poster {
+      width: 80px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+    
+    /* Status Tabs */
+    .status-tabs {
+      display: flex;
+      gap: 4px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+    }
+    .status-tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      background: transparent;
+    }
+    .status-tab.active {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .status-tab:hover:not(.active) {
+      background: rgba(255,255,255,0.5);
+    }
+    
+    /* Poster Thumbnail */
+    .poster-thumb {
+      width: 80px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+    }
+    
+    /* Star Rating Input */
+    .star-rating-input {
+      display: flex;
+      gap: 4px;
+    }
+    .star-rating-input .star {
+      font-size: 28px;
+      cursor: pointer;
+      color: #d1d5db;
+      transition: color 0.1s;
+    }
+    .star-rating-input .star.filled {
+      color: #f59e0b;
+    }
+    .star-rating-input .star:hover {
+      color: #fbbf24;
+    }
+    
+    /* Status Radio */
+    .status-radio {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .status-option {
+      padding: 10px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-option:hover {
+      border-color: #93c5fd;
+    }
+    .status-option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    
+    /* Modal Overlay */
+    .modal-backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+    }
+    
+    /* Profile Favorite Slot */
+    .profile-slot {
+      width: 120px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .profile-slot:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .profile-slot.filled {
+      border: none;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Request Status Row */
+    .request-row {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  
+  <!-- Navigation Bar (Logged In State) -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo">K</div>
+      <span>K-Journal</span>
+    </a>
+    <div class="navbar-center">
+      <input type="text" class="search-bar" placeholder="Search for K-dramas, K-movies...">
+    </div>
+    <div class="navbar-right">
+      <a href="#S-JRN-01" class="text-sm font-semibold text-blue-600">My Journal</a>
+      <div class="flex items-center gap-2 ml-4">
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold text-sm">K</div>
+        <div class="relative group">
+          <button class="text-sm text-gray-600">▼</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    
+    <!-- Module Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-sm font-mono font-bold text-purple-600">WAVE 3</span>
+        <h1 class="text-2xl font-bold text-gray-900">Journaling & Favorites</h1>
+      </div>
+      <p class="text-gray-600">Personal journal, favorites, and content requests</p>
+      <div class="mt-3 flex gap-2">
+        <span class="badge badge-purple">JOURNAL</span>
+        <span class="badge badge-info">5 Screens</span>
+        <span class="badge badge-neutral">User Only</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-JRN-01: Personal Journal -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-JRN-01">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-JRN-01</span>
+            <h2 class="text-lg font-bold text-gray-900">Personal Journal</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-JRN-01', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-JRN-01', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-JRN-01', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-JRN-01', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-JRN-01', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">📖</div>
+                  <div class="empty-state-title">Your journal is empty.</div>
+                  <div class="empty-state-description">Start by browsing the catalog to track your K-drama journey!</div>
+                  <a href="02-content.html#S-CAT-02" class="empty-state-cta">Browse Catalog</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">My Journal</h1>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-gray-500">23 entries</span>
+                    <select class="border rounded-lg px-3 py-2 text-sm">
+                      <option>Recently Updated</option>
+                      <option>Rating (High to Low)</option>
+                      <option>Title (A-Z)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- Status Filter Tabs -->
+                <div class="status-tabs mb-6">
+                  <button class="status-tab active">All <span class="text-gray-400 ml-1">23</span></button>
+                  <button class="status-tab">Watching <span class="text-blue-500 ml-1">3</span></button>
+                  <button class="status-tab">Completed <span class="text-green-600 ml-1">15</span></button>
+                  <button class="status-tab">Plan to Watch <span class="text-yellow-600 ml-1">4</span></button>
+                  <button class="status-tab">Dropped <span class="text-red-500 ml-1">1</span></button>
+                </div>
+                
+                <!-- Entry List -->
+                <div class="space-y-4">
+                  <!-- Entry 1 - WATCHING -->
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 class="font-semibold text-gray-900">Crash Landing on You</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-400 text-sm">2019</span>
+                          </div>
+                        </div>
+                        <span class="badge badge-watching">WATCHING</span>
+                      </div>
+                      <div class="flex items-center gap-3 mb-2">
+                        <span class="rating-stars">★★★★★</span>
+                        <span class="text-sm font-medium">5.0</span>
+                        <span class="text-red-500 text-sm">❤️</span>
+                      </div>
+                      <p class="text-sm text-gray-600 line-clamp-2">One of the best K-dramas I've ever watched. The chemistry between the leads is absolutely amazing!</p>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-400">Added Dec 15, 2024</span>
+                        <div class="flex gap-2">
+                          <button class="text-sm text-blue-600 hover:underline" onclick="showEditModal()">Edit</button>
+                          <button class="text-sm text-red-500 hover:underline">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Entry 2 - COMPLETED -->
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 class="font-semibold text-gray-900">Reply 1988</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-400 text-sm">2015</span>
+                          </div>
+                        </div>
+                        <span class="badge badge-completed">COMPLETED</span>
+                      </div>
+                      <div class="flex items-center gap-3 mb-2">
+                        <span class="rating-stars">★★★★★</span>
+                        <span class="text-sm font-medium">5.0</span>
+                      </div>
+                      <p class="text-sm text-gray-600 line-clamp-2">A heartwarming story about family and friendship. The best Reply series!</p>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-400">Added Nov 20, 2024</span>
+                        <div class="flex gap-2">
+                          <button class="text-sm text-blue-600 hover:underline">Edit</button>
+                          <button class="text-sm text-red-500 hover:underline">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Entry 3 - PLAN_TO_WATCH -->
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 class="font-semibold text-gray-900">The Glory</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-400 text-sm">2022</span>
+                          </div>
+                        </div>
+                        <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+                      </div>
+                      <div class="flex items-center gap-3 mb-2">
+                        <span class="rating-stars-empty">☆☆☆☆☆</span>
+                        <span class="text-sm text-gray-400">Not rated</span>
+                      </div>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-400">Added Dec 10, 2024</span>
+                        <div class="flex gap-2">
+                          <button class="text-sm text-blue-600 hover:underline">Edit</button>
+                          <button class="text-sm text-red-500 hover:underline">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Entry 4 - DROPPED -->
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1">
+                      <div class="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 class="font-semibold text-gray-900">Some Random Drama</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-400 text-sm">2023</span>
+                          </div>
+                        </div>
+                        <span class="badge badge-dropped">DROPPED</span>
+                      </div>
+                      <div class="flex items-center gap-3 mb-2">
+                        <span class="rating-stars">★★☆☆☆</span>
+                        <span class="text-sm font-medium">2.0</span>
+                      </div>
+                      <p class="text-sm text-gray-600 line-clamp-2">Couldn't get into it. The plot was too slow.</p>
+                      <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-400">Added Nov 5, 2024</span>
+                        <div class="flex gap-2">
+                          <button class="text-sm text-blue-600 hover:underline">Edit</button>
+                          <button class="text-sm text-red-500 hover:underline">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-center items-center gap-2 mt-8">
+                  <button class="btn btn-secondary btn-sm" disabled>← Prev</button>
+                  <span class="px-3 py-1 bg-blue-600 text-white rounded text-sm font-semibold">1</span>
+                  <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">2</span>
+                  <button class="btn btn-secondary btn-sm">Next →</button>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="flex justify-between items-center mb-6">
+                  <div class="h-8 w-32 skeleton"></div>
+                  <div class="h-10 w-40 skeleton"></div>
+                </div>
+                <div class="h-12 w-full skeleton rounded-lg mb-6"></div>
+                <div class="space-y-4">
+                  <div class="journal-entry-card opacity-50">
+                    <div class="journal-entry-poster skeleton"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-2"></div>
+                      <div class="h-4 w-24 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="journal-entry-card opacity-50">
+                    <div class="journal-entry-poster skeleton"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-2"></div>
+                      <div class="h-4 w-24 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="journal-entry-card opacity-50">
+                    <div class="journal-entry-poster skeleton"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-2"></div>
+                      <div class="h-4 w-24 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load your journal.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After entry added/edited) -->
+              <div data-state="success">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">My Journal</h1>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-gray-500">24 entries</span>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Entry Updated!</div>
+                      <div class="toast-message">Crash Landing on You has been saved.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="status-tabs mb-6">
+                  <button class="status-tab active">All <span class="text-gray-400 ml-1">24</span></button>
+                  <button class="status-tab">Watching <span class="text-blue-500 ml-1">3</span></button>
+                  <button class="status-tab">Completed <span class="text-green-600 ml-1">16</span></button>
+                </div>
+                
+                <div class="space-y-4 opacity-50">
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1"><div class="h-5 w-48 bg-gray-100 rounded mb-2"></div></div>
+                  </div>
+                  <div class="journal-entry-card">
+                    <div class="journal-entry-poster">🎬</div>
+                    <div class="flex-1"><div class="h-5 w-48 bg-gray-100 rounded mb-2"></div></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Navigation</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Personal Journal</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Navigation, <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail)<br>
+            <strong>→ To:</strong> <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (click entry), <a href="#S-JRN-02" class="text-blue-600">S-JRN-02</a> (Edit)<br><br>
+            <strong>Filter behavior:</strong> Tab filter shows count per status<br>
+            <strong>Sort options:</strong> Recently Updated, Rating, Title
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Status tabs provide quick filtering. Entry cards show status/rating prominently for scanning. Edit/Remove actions inline for quick management."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/journal/entries?status=&sort=&page=<br>
+            <strong>Status values:</strong> WATCHING, COMPLETED, DROPPED, PLAN_TO_WATCH<br>
+            <strong>Delete:</strong> DELETE /api/journal/entries/{id}<br>
+            <strong>Pagination:</strong> 20 entries per page
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Content title, Watch status, Rating</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Poster, Review snippet, Favorite icon</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Type/Year, Date added</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-red-700 mb-3">Delete Confirmation</h4>
+            <div class="bg-white rounded-lg p-4 text-sm">
+              <p class="font-bold text-gray-900 mb-2">Remove from Journal</p>
+              <p class="text-gray-600 mb-4 text-xs">Remove 'Crash Landing on You' from your journal? This will also remove any rating, review, and favorite status.</p>
+              <div class="flex gap-2">
+                <button class="btn btn-secondary btn-sm">Cancel</button>
+                <button class="btn btn-danger btn-sm">Remove</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-JRN-02: Journal Entry Form (Modal) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-JRN-02">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-JRN-02</span>
+            <h2 class="text-lg font-bold text-gray-900">Journal Entry Form</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile (Modal Overlay)</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-JRN-02', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-JRN-02', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-JRN-02', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-JRN-02', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-JRN-02', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px; position: relative;">
+            <div class="wireframe-content p-0">
+              
+              <!-- EMPTY STATE (New Entry) -->
+              <div data-state="empty">
+                <div class="modal-backdrop">
+                  <div class="modal-content">
+                    <div class="p-6 border-b border-gray-200">
+                      <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-900">Add to Journal</h2>
+                        <button class="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+                      </div>
+                    </div>
+                    
+                    <div class="p-6">
+                      <!-- Content Info -->
+                      <div class="flex gap-4 mb-6 pb-6 border-b border-gray-100">
+                        <div class="poster-thumb">🎬</div>
+                        <div>
+                          <h3 class="font-semibold text-gray-900">Crash Landing on You</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-500 text-sm">2019 • 16 episodes</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Watch Status (Required) -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">
+                          Watch Status<span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <div class="status-radio">
+                          <label class="status-option">
+                            <input type="radio" name="status" class="hidden">
+                            <span class="badge badge-watching">WATCHING</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status" class="hidden">
+                            <span class="badge badge-completed">COMPLETED</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status" class="hidden">
+                            <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status" class="hidden">
+                            <span class="badge badge-dropped">DROPPED</span>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <!-- Rating -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">Rating</label>
+                        <div class="flex items-center gap-4">
+                          <div class="star-rating-input">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                          </div>
+                          <span class="text-sm text-gray-500">Not rated</span>
+                          <button class="text-sm text-blue-600 hover:underline">Clear</button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Click stars to rate (supports half-star increments)</p>
+                      </div>
+                      
+                      <!-- Review -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">Review <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <textarea class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm h-28" placeholder="Share your thoughts about this title..."></textarea>
+                      </div>
+                      
+                      <!-- Favorite -->
+                      <div class="mb-6">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                          <input type="checkbox" class="w-5 h-5 accent-red-500">
+                          <span class="text-sm font-semibold text-gray-700">Mark as Favorite</span>
+                          <span class="text-red-500">❤️</span>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="p-6 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 rounded-b-2xl">
+                      <button class="btn btn-secondary">Cancel</button>
+                      <button class="btn btn-primary">Save to Journal</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Edit Entry) -->
+              <div data-state="populated" class="visible">
+                <div class="modal-backdrop">
+                  <div class="modal-content">
+                    <div class="p-6 border-b border-gray-200">
+                      <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-900">Edit Journal Entry</h2>
+                        <button class="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+                      </div>
+                    </div>
+                    
+                    <div class="p-6">
+                      <!-- Content Info -->
+                      <div class="flex gap-4 mb-6 pb-6 border-b border-gray-100">
+                        <div class="poster-thumb">🎬</div>
+                        <div>
+                          <h3 class="font-semibold text-gray-900">Crash Landing on You</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <span class="badge badge-info">Drama</span>
+                            <span class="text-gray-500 text-sm">2019 • 16 episodes</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Watch Status (Selected) -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">
+                          Watch Status<span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <div class="status-radio">
+                          <label class="status-option selected">
+                            <input type="radio" name="status-edit" class="hidden" checked>
+                            <span class="badge badge-watching">WATCHING</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status-edit" class="hidden">
+                            <span class="badge badge-completed">COMPLETED</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status-edit" class="hidden">
+                            <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+                          </label>
+                          <label class="status-option">
+                            <input type="radio" name="status-edit" class="hidden">
+                            <span class="badge badge-dropped">DROPPED</span>
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <!-- Rating (Filled) -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">Rating</label>
+                        <div class="flex items-center gap-4">
+                          <div class="star-rating-input">
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                          </div>
+                          <span class="text-sm font-semibold text-gray-700">5.0</span>
+                          <button class="text-sm text-blue-600 hover:underline">Clear</button>
+                        </div>
+                      </div>
+                      
+                      <!-- Review (Filled) -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">Review <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <textarea class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm h-28">One of the best K-dramas I've ever watched. The chemistry between the leads is absolutely amazing!</textarea>
+                      </div>
+                      
+                      <!-- Favorite (Checked) -->
+                      <div class="mb-6">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                          <input type="checkbox" class="w-5 h-5 accent-red-500" checked>
+                          <span class="text-sm font-semibold text-gray-700">Mark as Favorite</span>
+                          <span class="text-red-500">❤️</span>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="p-6 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 rounded-b-2xl">
+                      <button class="btn btn-secondary">Cancel</button>
+                      <button class="btn btn-primary">Update Entry</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="modal-backdrop">
+                  <div class="modal-content">
+                    <div class="p-6 border-b border-gray-200">
+                      <div class="h-7 w-48 skeleton"></div>
+                    </div>
+                    <div class="p-6">
+                      <div class="flex gap-4 mb-6">
+                        <div class="poster-thumb skeleton"></div>
+                        <div class="flex-1">
+                          <div class="h-5 w-48 skeleton mb-2"></div>
+                          <div class="h-4 w-32 skeleton"></div>
+                        </div>
+                      </div>
+                      <div class="h-10 w-full skeleton mb-6"></div>
+                      <div class="h-16 w-full skeleton mb-6"></div>
+                      <div class="h-28 w-full skeleton mb-6"></div>
+                    </div>
+                    <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
+                      <div class="h-10 w-20 skeleton"></div>
+                      <div class="h-10 w-32 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="modal-backdrop">
+                  <div class="modal-content">
+                    <div class="p-6 border-b border-gray-200">
+                      <h2 class="text-xl font-bold text-gray-900">Add to Journal</h2>
+                    </div>
+                    <div class="p-6">
+                      <div class="alert alert-error mb-4">
+                        Please select a watch status.
+                      </div>
+                      
+                      <div class="mb-6">
+                        <label class="block text-sm font-bold text-gray-700 mb-3">
+                          Watch Status<span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <div class="status-radio">
+                          <label class="status-option border-red-300 bg-red-50">
+                            <span class="badge badge-watching">WATCHING</span>
+                          </label>
+                          <label class="status-option">
+                            <span class="badge badge-completed">COMPLETED</span>
+                          </label>
+                          <label class="status-option">
+                            <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+                          </label>
+                          <label class="status-option">
+                            <span class="badge badge-dropped">DROPPED</span>
+                          </label>
+                        </div>
+                        <p class="text-xs text-red-600 mt-2">Please select a watch status.</p>
+                      </div>
+                    </div>
+                    <div class="p-6 border-t border-gray-200 flex justify-end gap-3">
+                      <button class="btn btn-secondary">Cancel</button>
+                      <button class="btn btn-primary">Save to Journal</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="modal-backdrop">
+                  <div class="modal-content">
+                    <div class="p-6 border-b border-gray-200">
+                      <h2 class="text-xl font-bold text-gray-900">Edit Journal Entry</h2>
+                    </div>
+                    <div class="p-6">
+                      <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                        <div class="toast">
+                          <div class="toast-icon">✅</div>
+                          <div class="toast-content">
+                            <div class="toast-title">Saved to your journal!</div>
+                            <div class="toast-message">Closing...</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="opacity-50">
+                        <div class="flex gap-4 mb-6">
+                          <div class="poster-thumb">🎬</div>
+                          <div><div class="h-5 w-48 bg-gray-100 rounded mb-2"></div></div>
+                        </div>
+                        <div class="h-10 w-full bg-gray-100 rounded mb-6"></div>
+                        <div class="h-16 w-full bg-gray-100 rounded mb-6"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Content Detail</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Journal Entry Form</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Back to Detail/Journal</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Add/Edit button), <a href="#S-JRN-01" class="text-blue-600">S-JRN-01</a> (Edit button)<br>
+            <strong>→ To:</strong> Return to previous page on Save/Cancel<br><br>
+            <strong>Add mode:</strong> All fields default/empty<br>
+            <strong>Edit mode:</strong> Fields pre-filled with current values
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Progressive Disclosure principle - Status is required (only mandatory field). Rating, review, favorite are optional but easily accessible. Modal overlay preserves context from previous page."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong><br>
+            - POST /api/journal/entries (create)<br>
+            - PUT /api/journal/entries/{id} (update)<br>
+            <strong>Rating:</strong> 0.5 - 5.0 (10 positions, stored as decimal)<br>
+            <strong>Status required:</strong> Validation error if not selected
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Watch status (required), Rating, Content title/info</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Review, Favorite</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-blue-700 mb-3">Rating Interaction</h4>
+            <ul class="text-xs text-blue-800 space-y-1">
+              <li>• 10 star positions (0.5 increments)</li>
+              <li>• Click to set rating</li>
+              <li>• Clear button to unrate</li>
+              <li>• Half-star display supported</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-JRN-03: My Favorites -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-JRN-03">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-JRN-03</span>
+            <h2 class="text-lg font-bold text-gray-900">My Favorites</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-JRN-03', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-JRN-03', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-JRN-03', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-JRN-03', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-JRN-03', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 550px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">❤️</div>
+                  <div class="empty-state-title">You haven't marked any favorites yet.</div>
+                  <div class="empty-state-description">Browse your journal to add some favorites!</div>
+                  <a href="#S-JRN-01" class="empty-state-cta">Go to Journal</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">My Favorites</h1>
+                
+                <!-- Profile Favorites Section -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+                  <div class="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 class="font-semibold text-gray-900">Profile Favorites</h2>
+                      <p class="text-sm text-gray-600">These will appear on your public profile</p>
+                    </div>
+                    <a href="04-profile.html#S-PROF-02" class="btn btn-secondary btn-sm">Edit Profile</a>
+                  </div>
+                  
+                  <div class="flex gap-4 flex-wrap">
+                    <!-- Slot 1 (Filled) -->
+                    <div class="profile-slot filled">
+                      <div class="w-full h-full flex flex-col">
+                        <div class="flex-1 flex items-center justify-center text-3xl">🎬</div>
+                        <div class="bg-white p-2 text-center border-t">
+                          <p class="text-xs font-semibold text-gray-900 truncate">Crash Landing on You</p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Slot 2 (Filled) -->
+                    <div class="profile-slot filled">
+                      <div class="w-full h-full flex flex-col">
+                        <div class="flex-1 flex items-center justify-center text-3xl">🎬</div>
+                        <div class="bg-white p-2 text-center border-t">
+                          <p class="text-xs font-semibold text-gray-900 truncate">Reply 1988</p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Slot 3 (Empty) -->
+                    <div class="profile-slot">
+                      <span class="text-2xl">+</span>
+                      <span class="text-xs mt-1">Add</span>
+                    </div>
+                    <!-- Slot 4 (Empty) -->
+                    <div class="profile-slot">
+                      <span class="text-2xl">+</span>
+                      <span class="text-xs mt-1">Add</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- All Favorites -->
+                <div>
+                  <h2 class="font-semibold text-gray-900 mb-4">All Favorites <span class="text-gray-400">(8)</span></h2>
+                  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <!-- Favorite Cards -->
+                    <div class="relative">
+                      <a href="02-content.html#S-CAT-03" class="content-card block">
+                        <div class="content-card-poster">🎬</div>
+                        <div class="content-card-body">
+                          <div class="content-card-title">Crash Landing on You</div>
+                          <div class="flex items-center gap-1 mt-1">
+                            <span class="rating-stars text-xs">★★★★★</span>
+                            <span class="text-xs">5.0</span>
+                          </div>
+                        </div>
+                      </a>
+                      <span class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">On Profile</span>
+                    </div>
+                    
+                    <div class="relative">
+                      <a href="02-content.html#S-CAT-03" class="content-card block">
+                        <div class="content-card-poster">🎬</div>
+                        <div class="content-card-body">
+                          <div class="content-card-title">Reply 1988</div>
+                          <div class="flex items-center gap-1 mt-1">
+                            <span class="rating-stars text-xs">★★★★★</span>
+                            <span class="text-xs">5.0</span>
+                          </div>
+                        </div>
+                      </a>
+                      <span class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">On Profile</span>
+                    </div>
+                    
+                    <a href="02-content.html#S-CAT-03" class="content-card block">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Goblin</div>
+                        <div class="flex items-center gap-1 mt-1">
+                          <span class="rating-stars text-xs">★★★★★</span>
+                          <span class="text-xs">4.8</span>
+                        </div>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="content-card block">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Parasite</div>
+                        <div class="flex items-center gap-1 mt-1">
+                          <span class="rating-stars text-xs">★★★★★</span>
+                          <span class="text-xs">4.7</span>
+                        </div>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="content-card block">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">My Demon</div>
+                        <div class="flex items-center gap-1 mt-1">
+                          <span class="rating-stars text-xs">★★★★☆</span>
+                          <span class="text-xs">4.3</span>
+                        </div>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="content-card block">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">The Glory</div>
+                        <div class="flex items-center gap-1 mt-1">
+                          <span class="rating-stars text-xs">★★★★★</span>
+                          <span class="text-xs">4.7</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="h-8 w-32 skeleton mb-6"></div>
+                <div class="bg-blue-50 rounded-xl p-6 mb-8 opacity-50">
+                  <div class="h-6 w-40 skeleton mb-2"></div>
+                  <div class="h-4 w-56 skeleton mb-4"></div>
+                  <div class="flex gap-4">
+                    <div class="profile-slot skeleton"></div>
+                    <div class="profile-slot skeleton"></div>
+                    <div class="profile-slot skeleton"></div>
+                    <div class="profile-slot skeleton"></div>
+                  </div>
+                </div>
+                <div class="h-6 w-32 skeleton mb-4"></div>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load favorites.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After profile selection) -->
+              <div data-state="success">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">My Favorites</h1>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Profile Updated!</div>
+                      <div class="toast-message">Your profile favorites have been saved.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8 opacity-50">
+                  <div class="flex items-center justify-between mb-4">
+                    <div>
+                      <div class="h-6 w-40 bg-gray-200 rounded mb-2"></div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <div class="profile-slot filled"></div>
+                    <div class="profile-slot filled"></div>
+                    <div class="profile-slot"></div>
+                    <div class="profile-slot"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Navigation</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">My Favorites</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Navigation, Profile<br>
+            <strong>→ To:</strong> <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (click favorite), <a href="04-profile.html#S-PROF-02" class="text-blue-600">S-PROF-02</a> (Edit Profile)<br><br>
+            <strong>Profile favorites:</strong> Max 4 slots, shown on public profile<br>
+            <strong>All favorites:</strong> Unlimited, shown in grid below
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Hierarchy and Visual Weight principle - Profile favorites (max 4) prominently displayed in blue section at top. All favorites below in standard grid. 'On Profile' badge provides clear feedback on selection status."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/journal/favorites<br>
+            <strong>Profile favorites:</strong> Stored in UserProfile.profile_favorites (ordered array of content IDs)<br>
+            <strong>Max profile slots:</strong> 4<br>
+            <strong>Removing favorite:</strong> Also removes from profile_favorites
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Content title, Poster, Rating, Profile badge</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Type/Year</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-05: Content Request Form -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-05">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-05</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Request Form</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn active" onclick="showState('S-CAT-05', 'empty', this)">Empty</button>
+          <button class="state-btn" onclick="showState('S-CAT-05', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-05', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-05', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-05', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 450px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (New Form) -->
+              <div data-state="empty" class="visible">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-2">Request Content</h1>
+                  <p class="text-gray-600 text-sm mb-6">Can't find what you're looking for? Submit a request and we'll review it.</p>
+                  
+                  <form class="space-y-5">
+                    <div class="field-primary">
+                      <label for="req-title">Title<span class="required-mark">*</span></label>
+                      <input type="text" id="req-title" placeholder="Enter the title" class="w-full">
+                    </div>
+                    
+                    <div class="field-primary">
+                      <label for="req-type">Type<span class="required-mark">*</span></label>
+                      <select id="req-type" class="w-full">
+                        <option value="">Select type...</option>
+                        <option value="drama">K-Drama</option>
+                        <option value="movie">K-Movie</option>
+                      </select>
+                    </div>
+                    
+                    <div class="field-secondary">
+                      <label for="req-year">Year <span class="text-gray-400">(optional)</span></label>
+                      <input type="number" id="req-year" placeholder="e.g., 2024" class="w-full" min="1900" max="2030">
+                    </div>
+                    
+                    <div class="field-secondary">
+                      <label for="req-notes">Notes <span class="text-gray-400">(optional)</span></label>
+                      <textarea id="req-notes" placeholder="Any additional information that might help..." class="w-full h-20"></textarea>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm">
+                      <p class="text-blue-800">
+                        <strong>Note:</strong> You can submit up to 5 requests per day. We'll review your request and notify you of the decision.
+                      </p>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                      <a href="#" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Pre-filled from search) -->
+              <div data-state="populated">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-2">Request Content</h1>
+                  <p class="text-gray-600 text-sm mb-6">Can't find what you're looking for? Submit a request and we'll review it.</p>
+                  
+                  <form class="space-y-5">
+                    <div class="field-primary">
+                      <label for="req-title-pop">Title<span class="required-mark">*</span></label>
+                      <input type="text" id="req-title-pop" value="Sky Castle" class="w-full">
+                    </div>
+                    
+                    <div class="field-primary">
+                      <label for="req-type-pop">Type<span class="required-mark">*</span></label>
+                      <select id="req-type-pop" class="w-full">
+                        <option value="">Select type...</option>
+                        <option value="drama" selected>K-Drama</option>
+                        <option value="movie">K-Movie</option>
+                      </select>
+                    </div>
+                    
+                    <div class="field-secondary">
+                      <label for="req-year-pop">Year <span class="text-gray-400">(optional)</span></label>
+                      <input type="number" id="req-year-pop" value="2018" class="w-full">
+                    </div>
+                    
+                    <div class="field-secondary">
+                      <label for="req-notes-pop">Notes <span class="text-gray-400">(optional)</span></label>
+                      <textarea id="req-notes-pop" class="w-full h-20">This is a popular K-drama that should be in the catalog.</textarea>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                      <a href="#" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="max-w-lg mx-auto">
+                  <div class="h-8 w-48 skeleton mb-2"></div>
+                  <div class="h-4 w-72 skeleton mb-6"></div>
+                  <div class="space-y-5">
+                    <div class="h-10 w-full skeleton"></div>
+                    <div class="h-10 w-full skeleton"></div>
+                    <div class="h-10 w-full skeleton"></div>
+                    <div class="h-20 w-full skeleton"></div>
+                    <div class="flex gap-3">
+                      <div class="h-10 w-20 skeleton"></div>
+                      <div class="h-10 w-36 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-2">Request Content</h1>
+                  <p class="text-gray-600 text-sm mb-6">Can't find what you're looking for? Submit a request and we'll review it.</p>
+                  
+                  <div class="alert alert-error mb-4">
+                    Unable to submit request. Please try again.
+                  </div>
+                  
+                  <form class="space-y-5">
+                    <div class="field-primary">
+                      <label for="req-title-err">Title<span class="required-mark">*</span></label>
+                      <input type="text" id="req-title-err" value="Sky Castle" class="w-full">
+                    </div>
+                    
+                    <div class="field-primary">
+                      <label for="req-type-err">Type<span class="required-mark">*</span></label>
+                      <select id="req-type-err" class="w-full">
+                        <option value="drama" selected>K-Drama</option>
+                      </select>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                      <a href="#" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="max-w-lg mx-auto">
+                  <div class="text-center py-8">
+                    <div class="text-5xl mb-4">✅</div>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">Request Submitted!</h1>
+                    <p class="text-gray-600 mb-6">We'll review it shortly. Check My Requests for updates.</p>
+                    <a href="#S-CAT-06" class="btn btn-primary">View My Requests</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Search (no results)</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Request Form</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">My Requests</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="02-content.html#S-CAT-04" class="text-blue-600">S-CAT-04</a> (Search no results), Settings<br>
+            <strong>→ To:</strong> <a href="#S-CAT-06" class="text-blue-600">S-CAT-06</a> (My Requests on success)<br><br>
+            <strong>Pre-fill:</strong> Title passed from search query<br>
+            <strong>Rate limit:</strong> 5 requests per day per user
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Error Prevention First principle - Clear required/optional distinction. Rate limit warning sets expectations upfront. Pre-fill from search reduces friction."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> POST /api/content-requests<br>
+            <strong>Validation:</strong><br>
+            - Title: required, 1-255 chars<br>
+            - Type: required (drama/movie)<br>
+            <strong>Rate limit:</strong> 5/day/user<br>
+            <strong>Duplicate check:</strong> Same title + type
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Title, Type (required)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Year (helps admin verify)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Notes (additional context)</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-06: My Requests -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-06">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-06</span>
+            <h2 class="text-lg font-bold text-gray-900">My Requests</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-CAT-06', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-CAT-06', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-06', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-06', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-06', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 450px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">📋</div>
+                  <div class="empty-state-title">You haven't submitted any content requests.</div>
+                  <div class="empty-state-description">Can't find something? Request it to be added!</div>
+                  <a href="#S-CAT-05" class="empty-state-cta">Request Content</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">My Requests</h1>
+                  <a href="#S-CAT-05" class="btn btn-primary btn-sm">+ New Request</a>
+                </div>
+                
+                <div class="space-y-4">
+                  <!-- PENDING Request -->
+                  <div class="request-row">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-1">
+                        <h3 class="font-semibold text-gray-900">Sky Castle</h3>
+                        <span class="badge badge-info">Drama</span>
+                        <span class="badge badge-warning">PENDING</span>
+                      </div>
+                      <p class="text-sm text-gray-500">Submitted Dec 20, 2024</p>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-sm text-gray-400">Awaiting review</span>
+                    </div>
+                  </div>
+                  
+                  <!-- APPROVED Request -->
+                  <div class="request-row bg-green-50 border-green-200">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-1">
+                        <h3 class="font-semibold text-gray-900">My Demon</h3>
+                        <span class="badge badge-info">Drama</span>
+                        <span class="badge badge-success">APPROVED</span>
+                      </div>
+                      <p class="text-sm text-gray-500">Submitted Dec 15, 2024</p>
+                    </div>
+                    <div class="text-right">
+                      <a href="02-content.html#S-CAT-03" class="btn btn-primary btn-sm">View in Catalog</a>
+                    </div>
+                  </div>
+                  
+                  <!-- REJECTED Request -->
+                  <div class="request-row bg-red-50 border-red-200">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-1">
+                        <h3 class="font-semibold text-gray-900">Random Title</h3>
+                        <span class="badge badge-purple">Movie</span>
+                        <span class="badge badge-danger">REJECTED</span>
+                      </div>
+                      <p class="text-sm text-gray-500">Submitted Dec 10, 2024</p>
+                      <p class="text-sm text-red-600 mt-1">Reason: This title is not a Korean production.</p>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-sm text-gray-400">—</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Another APPROVED -->
+                  <div class="request-row">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-3 mb-1">
+                        <h3 class="font-semibold text-gray-900">The Glory</h3>
+                        <span class="badge badge-info">Drama</span>
+                        <span class="badge badge-success">APPROVED</span>
+                      </div>
+                      <p class="text-sm text-gray-500">Submitted Dec 5, 2024</p>
+                    </div>
+                    <div class="text-right">
+                      <a href="02-content.html#S-CAT-03" class="btn btn-primary btn-sm">View in Catalog</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="flex justify-between items-center mb-6">
+                  <div class="h-8 w-32 skeleton"></div>
+                  <div class="h-10 w-28 skeleton"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="request-row opacity-50">
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="request-row opacity-50">
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="request-row opacity-50">
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load requests.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After request approved notification) -->
+              <div data-state="success">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">My Requests</h1>
+                  <a href="#S-CAT-05" class="btn btn-primary btn-sm">+ New Request</a>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Request Approved!</div>
+                      <div class="toast-message">"Sky Castle" has been added to the catalog.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="space-y-4 opacity-50">
+                  <div class="request-row">
+                    <div class="flex-1">
+                      <div class="h-5 w-48 bg-gray-100 rounded mb-2"></div>
+                      <div class="h-4 w-32 bg-gray-100 rounded"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Request Form</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">My Requests</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-CAT-05" class="text-blue-600">S-CAT-05</a> (after submit), Settings<br>
+            <strong>→ To:</strong> <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (View in Catalog), <a href="#S-CAT-05" class="text-blue-600">S-CAT-05</a> (New Request)<br><br>
+            <strong>Status badges:</strong> PENDING (yellow), APPROVED (green), REJECTED (red)<br>
+            <strong>Rejected:</strong> Shows admin's rejection reason
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Feedback and System Status principle - Clear status indicators with distinct colors. Action available for approved requests (View in Catalog). Rejection reason provides transparency."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/content-requests/mine<br>
+            <strong>Status values:</strong> PENDING, APPROVED, REJECTED<br>
+            <strong>APPROVED rows:</strong> Include content_id for linking<br>
+            <strong>REJECTED rows:</strong> Include rejection_reason text
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Title, Status, View in Catalog (if approved)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Type, Submitted date</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Rejection reason (if rejected)</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-yellow-700 mb-3">Status Badge Colors</h4>
+            <div class="flex gap-2">
+              <span class="badge badge-warning">PENDING</span>
+              <span class="badge badge-success">APPROVED</span>
+              <span class="badge badge-danger">REJECTED</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+    <p>K-Journal Wireframes | Wave 3: Journaling & Favorites | <a href="index.html" class="text-blue-600 hover:underline">Back to Index</a></p>
+  </footer>
+
+  <script>
+    // State switching functionality
+    function showState(screenId, state, btn) {
+      const container = document.getElementById(screenId);
+      if (!container) return;
+      
+      container.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      container.querySelectorAll('[data-state]').forEach(el => {
+        el.classList.remove('visible');
+      });
+      const targetState = container.querySelector(`[data-state="${state}"]`);
+      if (targetState) {
+        targetState.classList.add('visible');
+      }
+    }
+    
+    // Edit modal placeholder
+    function showEditModal() {
+      const form = document.getElementById('S-JRN-02');
+      if (form) {
+        form.querySelectorAll('.state-btn')[1].click(); // Click "Populated" button
+      }
+    }
+  </script>
+</body>
+</html>

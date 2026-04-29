@@ -1,0 +1,134 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [citext]
+}
+
+model User {
+  id               String           @id @default(uuid()) @db.Uuid
+  email            String           @unique @db.Citext
+  username         String           @unique @db.Citext
+  passwordHash     String
+  role             Role             @default(USER)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  reviewedRequests ContentRequest[] @relation("AdminReviews")
+  requests         ContentRequest[] @relation("UserRequests")
+  journal          JournalEntry[]
+  refreshTokens    RefreshToken[]
+  profile          UserProfile?
+
+  @@index([email])
+  @@index([username])
+}
+
+model UserProfile {
+  userId           String   @id @db.Uuid
+  avatarUrl        String?  @db.VarChar(500)
+  bio              String?  @db.VarChar(160)
+  profileFavorites Json?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Content {
+  id              String           @id @default(uuid()) @db.Uuid
+  title           String
+  slug            String           @unique
+  type            ContentType
+  year            Int
+  synopsis        String?
+  posterUrl       String?          @db.VarChar(500)
+  genres          Json             @default("[]")
+  cast            String?
+  episodes        Int?
+  durationMinutes Int?
+  country         String           @default("South Korea")
+  isFeatured      Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  requests        ContentRequest[]
+  journalEntries  JournalEntry[]
+
+  @@index([title])
+  @@index([slug])
+}
+
+model Genre {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @unique @db.VarChar(50)
+  slug String @unique @db.VarChar(50)
+}
+
+model JournalEntry {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String      @db.Uuid
+  contentId  String      @db.Uuid
+  status     WatchStatus
+  rating     Decimal?    @db.Decimal(2, 1)
+  review     String?
+  isFavorite Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  content    Content     @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contentId])
+  @@index([userId])
+  @@index([contentId])
+}
+
+model ContentRequest {
+  id              String        @id @default(uuid()) @db.Uuid
+  userId          String        @db.Uuid
+  title           String        @db.VarChar(255)
+  type            ContentType
+  year            Int?
+  notes           String?
+  status          RequestStatus @default(PENDING)
+  rejectionReason String?
+  contentId       String?       @db.Uuid
+  createdAt       DateTime      @default(now())
+  reviewedAt      DateTime?
+  reviewedBy      String?       @db.Uuid
+  content         Content?      @relation(fields: [contentId], references: [id])
+  reviewer        User?         @relation("AdminReviews", fields: [reviewedBy], references: [id])
+  user            User          @relation("UserRequests", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ContentType {
+  DRAMA
+  MOVIE
+}
+
+enum WatchStatus {
+  WATCHING
+  COMPLETED
+  DROPPED
+  PLAN_TO_WATCH
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Journal - Admin Wireframes</title>
+  <link rel="stylesheet" href="_shared.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Rating Stars */
+    .rating-stars {
+      color: #f59e0b;
+      letter-spacing: -2px;
+    }
+    
+    /* Admin Sidebar */
+    .admin-sidebar {
+      background: #1e293b;
+      width: 240px;
+      min-height: 100%;
+      padding: 20px 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      color: white;
+    }
+    .admin-sidebar-logo {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid #334155;
+      margin-bottom: 20px;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .admin-nav-item:hover {
+      background: #334155;
+      color: white;
+    }
+    .admin-nav-item.active {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    /* Admin Content Area */
+    .admin-content {
+      margin-left: 240px;
+      padding: 24px;
+      min-height: 100vh;
+      background: #f8fafc;
+    }
+    
+    /* Stat Card */
+    .admin-stat-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .admin-stat-card.highlight {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-color: #f59e0b;
+    }
+    
+    /* Request Table */
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .admin-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-wire-border);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+    .admin-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-wire-border);
+    }
+    .admin-table tr:hover {
+      background: #f8fafc;
+    }
+    
+    /* Request Detail Card */
+    .request-detail-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .request-detail-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-wire-border);
+    }
+    .request-detail-body {
+      padding: 24px;
+    }
+    .request-detail-field {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .request-detail-field:last-child {
+      border-bottom: none;
+    }
+    .request-detail-label {
+      width: 140px;
+      flex-shrink: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .request-detail-value {
+      flex: 1;
+      font-size: 14px;
+    }
+    
+    /* Content Form */
+    .content-form-section {
+      margin-bottom: 32px;
+    }
+    .content-form-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-wire-border);
+    }
+    
+    /* Quick Actions */
+    .quick-action-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .quick-action-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+    .quick-action-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    /* Genre Tag */
+    .genre-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 9999px;
+      font-size: 12px;
+      margin: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .genre-tag:hover {
+      border-color: #3b82f6;
+    }
+    .genre-tag.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+      color: #1e40af;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  
+  <!-- Admin Sidebar Navigation -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold">K</div>
+        <div>
+          <div class="font-bold text-white">K-Journal</div>
+          <div class="text-xs text-gray-400">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+    
+    <nav>
+      <a href="#S-ADM-01" class="admin-nav-item active">
+        <span>📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#S-ADM-02" class="admin-nav-item">
+        <span>📋</span>
+        <span>Requests</span>
+      </a>
+      <a href="#S-ADM-06" class="admin-nav-item">
+        <span>🎬</span>
+        <span>Catalog</span>
+      </a>
+      <a href="#S-ADM-04" class="admin-nav-item">
+        <span>➕</span>
+        <span>Add Content</span>
+      </a>
+      <div class="border-t border-gray-700 my-4"></div>
+      <a href="index.html" class="admin-nav-item">
+        <span>🏠</span>
+        <span>Back to Site</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Admin Content Area -->
+  <main class="admin-content">
+    
+    <!-- Module Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-sm font-mono font-bold text-orange-600">WAVE 5</span>
+        <h1 class="text-2xl font-bold text-gray-900">Admin & Content Management</h1>
+      </div>
+      <p class="text-gray-600">Dashboard, request review, and content management</p>
+      <div class="mt-3 flex gap-2">
+        <span class="badge badge-warning">ADMIN</span>
+        <span class="badge badge-info">6 Screens</span>
+        <span class="badge badge-purple">Admin Only</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-01: Admin Dashboard -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-01">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-01</span>
+            <h2 class="text-lg font-bold text-gray-900">Admin Dashboard</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-ADM-01', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-ADM-01', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-01', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-01', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-01', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (No pending) -->
+              <div data-state="empty">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+                
+                <div class="admin-stat-card highlight mb-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-gray-600 text-sm mb-1">Pending Requests</p>
+                      <p class="text-4xl font-bold text-gray-900">0</p>
+                    </div>
+                    <div class="text-5xl">✅</div>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-4">No pending requests. Great job!</p>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Total Content</p>
+                    <p class="text-3xl font-bold text-gray-900">87</p>
+                  </div>
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Total Users</p>
+                    <p class="text-3xl font-bold text-gray-900">156</p>
+                  </div>
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Journal Entries</p>
+                    <p class="text-3xl font-bold text-gray-900">1,247</p>
+                  </div>
+                </div>
+                
+                <h2 class="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <a href="#S-ADM-02" class="quick-action-card">
+                    <div class="quick-action-icon bg-yellow-100">📋</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Review Requests</p>
+                      <p class="text-sm text-gray-500">0 pending</p>
+                    </div>
+                  </a>
+                  <a href="#S-ADM-04" class="quick-action-card">
+                    <div class="quick-action-icon bg-blue-100">➕</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Add New Content</p>
+                      <p class="text-sm text-gray-500">Create entry</p>
+                    </div>
+                  </a>
+                  <a href="#S-ADM-06" class="quick-action-card">
+                    <div class="quick-action-icon bg-green-100">🎬</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Manage Catalog</p>
+                      <p class="text-sm text-gray-500">87 titles</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+                
+                <!-- Pending Requests Highlight -->
+                <div class="admin-stat-card highlight mb-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-gray-600 text-sm mb-1">Pending Requests</p>
+                      <p class="text-4xl font-bold text-gray-900">7</p>
+                    </div>
+                    <div class="text-5xl">📋</div>
+                  </div>
+                  <a href="#S-ADM-02" class="btn btn-primary mt-4">Review Pending Requests →</a>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Total Content</p>
+                    <p class="text-3xl font-bold text-gray-900">87</p>
+                    <p class="text-xs text-green-600 mt-2">+5 this week</p>
+                  </div>
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Total Users</p>
+                    <p class="text-3xl font-bold text-gray-900">156</p>
+                    <p class="text-xs text-green-600 mt-2">+12 this week</p>
+                  </div>
+                  <div class="admin-stat-card">
+                    <p class="text-gray-500 text-sm mb-1">Journal Entries</p>
+                    <p class="text-3xl font-bold text-gray-900">1,247</p>
+                    <p class="text-xs text-green-600 mt-2">+89 this week</p>
+                  </div>
+                </div>
+                
+                <!-- Recent Requests -->
+                <h2 class="text-lg font-bold text-gray-900 mb-4">Recent Requests</h2>
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Submitted By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="cursor-pointer" onclick="window.location.href='#S-ADM-03'">
+                        <td class="font-medium">Sky Castle</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td>kdrama_fan_2024</td>
+                        <td class="text-gray-500">Dec 20, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                      </tr>
+                      <tr class="cursor-pointer">
+                        <td class="font-medium">My Name</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td>seoul_drama_lover</td>
+                        <td class="text-gray-500">Dec 19, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                      </tr>
+                      <tr class="cursor-pointer">
+                        <td class="font-medium">Oldboy</td>
+                        <td><span class="badge badge-purple">Movie</span></td>
+                        <td>thriller_fan</td>
+                        <td class="text-gray-500">Dec 18, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <!-- Quick Actions -->
+                <h2 class="text-lg font-bold text-gray-900 mb-4 mt-8">Quick Actions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <a href="#S-ADM-02" class="quick-action-card">
+                    <div class="quick-action-icon bg-yellow-100">📋</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Review Requests</p>
+                      <p class="text-sm text-yellow-600 font-medium">7 pending</p>
+                    </div>
+                  </a>
+                  <a href="#S-ADM-04" class="quick-action-card">
+                    <div class="quick-action-icon bg-blue-100">➕</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Add New Content</p>
+                      <p class="text-sm text-gray-500">Create entry</p>
+                    </div>
+                  </a>
+                  <a href="#S-ADM-06" class="quick-action-card">
+                    <div class="quick-action-icon bg-green-100">🎬</div>
+                    <div>
+                      <p class="font-semibold text-gray-900">Manage Catalog</p>
+                      <p class="text-sm text-gray-500">87 titles</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="h-8 w-32 skeleton mb-6"></div>
+                <div class="admin-stat-card highlight mb-6 opacity-50">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-10 w-16 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="admin-stat-card"><div class="h-20 skeleton"></div></div>
+                  <div class="admin-stat-card"><div class="h-20 skeleton"></div></div>
+                  <div class="admin-stat-card"><div class="h-20 skeleton"></div></div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load dashboard.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Content Created!</div>
+                      <div class="toast-message">Sky Castle has been added to the catalog.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+                
+                <div class="admin-stat-card highlight mb-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-gray-600 text-sm mb-1">Pending Requests</p>
+                      <p class="text-4xl font-bold text-gray-900">6</p>
+                    </div>
+                    <div class="text-5xl">📋</div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 opacity-50">
+                  <div class="admin-stat-card"><p class="text-3xl font-bold">87</p></div>
+                  <div class="admin-stat-card"><p class="text-3xl font-bold">156</p></div>
+                  <div class="admin-stat-card"><p class="text-3xl font-bold">1,247</p></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Admin Dashboard</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Requests / Catalog</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Navigation (admin only)<br>
+            <strong>→ To:</strong> <a href="#S-ADM-02" class="text-blue-600">S-ADM-02</a> (Requests), <a href="#S-ADM-04" class="text-blue-600">S-ADM-04</a> (Add Content), <a href="#S-ADM-06" class="text-blue-600">S-ADM-06</a> (Catalog)<br><br>
+            <strong>Most common action:</strong> Review pending requests (highlighted)
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Pending requests count is prominently displayed with yellow highlight. Quick actions provide easy access to common admin tasks. Recent requests give preview without navigation."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>APIs:</strong><br>
+            - GET /api/admin/stats<br>
+            - GET /api/content-requests?status=PENDING&limit=5<br>
+            <strong>Auth:</strong> ADMIN role required for /admin/* routes<br>
+            <strong>Stats:</strong> Computed on-demand (not cached)
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Pending requests count, Quick actions</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Total content count, Recent requests</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-02: Content Request Queue -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-02">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-02</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Request Queue</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-ADM-02', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-ADM-02', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-02', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-02', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-02', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">📋</div>
+                  <div class="empty-state-title">No content requests found.</div>
+                  <div class="empty-state-description">All caught up! No pending requests.</div>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">Content Requests</h1>
+                  <div class="flex items-center gap-3">
+                    <select class="border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                      <option value="pending" selected>Pending Only</option>
+                      <option value="all">All Requests</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- Request Table -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Year</th>
+                        <th>Submitted By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="cursor-pointer">
+                        <td class="font-medium">Sky Castle</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2018</td>
+                        <td>
+                          <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">kdrama_fan_2024</a>
+                        </td>
+                        <td class="text-gray-500">Dec 20, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-04" class="text-xs text-blue-600 hover:underline font-medium">Approve</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Reject</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="cursor-pointer">
+                        <td class="font-medium">My Name</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2021</td>
+                        <td>
+                          <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">seoul_drama_lover</a>
+                        </td>
+                        <td class="text-gray-500">Dec 19, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-04" class="text-xs text-blue-600 hover:underline font-medium">Approve</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Reject</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="cursor-pointer">
+                        <td class="font-medium">Oldboy</td>
+                        <td><span class="badge badge-purple">Movie</span></td>
+                        <td class="text-gray-500">2003</td>
+                        <td>
+                          <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">thriller_fan</a>
+                        </td>
+                        <td class="text-gray-500">Dec 18, 2024</td>
+                        <td><span class="badge badge-warning">PENDING</span></td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-04" class="text-xs text-blue-600 hover:underline font-medium">Approve</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Reject</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="cursor-pointer bg-green-50">
+                        <td class="font-medium">My Demon</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2023</td>
+                        <td>
+                          <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">kdrama_fan_2024</a>
+                        </td>
+                        <td class="text-gray-500">Dec 15, 2024</td>
+                        <td><span class="badge badge-success">APPROVED</span></td>
+                        <td>
+                          <span class="text-xs text-gray-400">Processed</span>
+                        </td>
+                      </tr>
+                      <tr class="cursor-pointer bg-red-50">
+                        <td class="font-medium">Random Title</td>
+                        <td><span class="badge badge-purple">Movie</span></td>
+                        <td class="text-gray-500">—</td>
+                        <td>
+                          <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">random_user</a>
+                        </td>
+                        <td class="text-gray-500">Dec 10, 2024</td>
+                        <td><span class="badge badge-danger">REJECTED</span></td>
+                        <td>
+                          <span class="text-xs text-gray-400">Not a Korean production</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-center items-center gap-2 mt-6">
+                  <button class="btn btn-secondary btn-sm" disabled>← Prev</button>
+                  <span class="px-3 py-1 bg-blue-600 text-white rounded text-sm font-semibold">1</span>
+                  <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">2</span>
+                  <button class="btn btn-secondary btn-sm">Next →</button>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="flex justify-between items-center mb-6">
+                  <div class="h-8 w-48 skeleton"></div>
+                  <div class="h-10 w-32 skeleton"></div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-xl p-4">
+                  <div class="space-y-4">
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="h-12 w-full skeleton"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load requests.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After approval) -->
+              <div data-state="success">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">Content Requests</h1>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Request Approved!</div>
+                      <div class="toast-message">Sky Castle has been added to the catalog.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden opacity-50">
+                  <table class="admin-table">
+                    <tbody>
+                      <tr><td class="font-medium">My Name</td><td><span class="badge badge-warning">PENDING</span></td></tr>
+                      <tr><td class="font-medium">Oldboy</td><td><span class="badge badge-warning">PENDING</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Dashboard</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Request Queue</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Request Detail / Content Form</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-ADM-01" class="text-blue-600">S-ADM-01</a> (Dashboard)<br>
+            <strong>→ To:</strong> <a href="#S-ADM-03" class="text-blue-600">S-ADM-03</a> (click row), <a href="#S-ADM-04" class="text-blue-600">S-ADM-04</a> (Quick approve)<br><br>
+            <strong>Default filter:</strong> Pending only<br>
+            <strong>Order:</strong> Oldest first (FIFO)
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Quick approve/reject actions inline on PENDING rows. Status filter for batch review. User link allows quick check for spam patterns."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/admin/content-requests?status=&page=<br>
+            <strong>Status filter:</strong> pending (default), all, approved, rejected<br>
+            <strong>Quick approve:</strong> Opens form with request data pre-filled<br>
+            <strong>Quick reject:</strong> Opens modal requiring rejection reason
+          </div>
+          
+          <div class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-red-700 mb-3">Quick Reject Modal</h4>
+            <div class="bg-white rounded-lg p-4 text-sm">
+              <p class="font-bold text-gray-900 mb-2">Reject Request</p>
+              <p class="text-gray-600 mb-3 text-xs">Please provide a reason for rejection.</p>
+              <textarea class="w-full border rounded px-3 py-2 text-sm h-20" placeholder="e.g., This title is not a Korean production."></textarea>
+              <div class="flex gap-2 mt-3">
+                <button class="btn btn-secondary btn-sm">Cancel</button>
+                <button class="btn btn-danger btn-sm">Reject Request</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-03: Content Request Detail -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-03">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-03</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Request Detail</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-ADM-03', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-ADM-03', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-03', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-03', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-03', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 450px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (Not found) -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🔍</div>
+                  <div class="empty-state-title">Request not found.</div>
+                  <div class="empty-state-description">This request may have been deleted.</div>
+                  <a href="#S-ADM-02" class="empty-state-cta">Back to Queue</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Pending) -->
+              <div data-state="populated" class="visible">
+                <div class="mb-6">
+                  <a href="#S-ADM-02" class="text-sm text-blue-600 hover:underline">← Back to Queue</a>
+                </div>
+                
+                <div class="request-detail-card">
+                  <div class="request-detail-header">
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <h1 class="text-xl font-bold text-gray-900">Sky Castle</h1>
+                        <div class="flex items-center gap-2 mt-2">
+                          <span class="badge badge-info">Drama</span>
+                          <span class="badge badge-warning">PENDING</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="request-detail-body">
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Title</div>
+                      <div class="request-detail-value">Sky Castle</div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Type</div>
+                      <div class="request-detail-value"><span class="badge badge-info">Drama</span></div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Year</div>
+                      <div class="request-detail-value">2018</div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Submitted By</div>
+                      <div class="request-detail-value">
+                        <a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">kdrama_fan_2024</a>
+                        <span class="text-gray-400 text-sm ml-2">(user@example.com)</span>
+                      </div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Submitted</div>
+                      <div class="request-detail-value text-gray-600">December 20, 2024 at 2:34 PM</div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Notes</div>
+                      <div class="request-detail-value">This is a very popular K-drama that should be in the catalog. It won multiple awards.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Action Buttons (Pending) -->
+                <div class="flex gap-3 mt-6">
+                  <a href="#S-ADM-04" class="btn btn-primary">Approve & Create Content</a>
+                  <button class="btn btn-danger">Reject Request</button>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="h-4 w-24 skeleton mb-6"></div>
+                <div class="request-detail-card">
+                  <div class="p-6">
+                    <div class="h-6 w-48 skeleton mb-4"></div>
+                    <div class="space-y-4">
+                      <div class="h-4 w-full skeleton"></div>
+                      <div class="h-4 w-3/4 skeleton"></div>
+                      <div class="h-4 w-1/2 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load request.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After rejection) -->
+              <div data-state="success">
+                <div class="mb-6">
+                  <a href="#S-ADM-02" class="text-sm text-blue-600 hover:underline">← Back to Queue</a>
+                </div>
+                
+                <div class="request-detail-card">
+                  <div class="request-detail-header bg-red-50">
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <h1 class="text-xl font-bold text-gray-900">Random Title</h1>
+                        <div class="flex items-center gap-2 mt-2">
+                          <span class="badge badge-purple">Movie</span>
+                          <span class="badge badge-danger">REJECTED</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="request-detail-body">
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Rejection Reason</div>
+                      <div class="request-detail-value text-red-700 font-medium">This title is not a Korean production.</div>
+                    </div>
+                    <div class="request-detail-field">
+                      <div class="request-detail-label">Reviewed</div>
+                      <div class="request-detail-value text-gray-600">December 20, 2024 at 3:15 PM</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Request Queue</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Request Detail</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Form / Queue</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-ADM-02" class="text-blue-600">S-ADM-02</a> (click row)<br>
+            <strong>→ To:</strong> <a href="#S-ADM-04" class="text-blue-600">S-ADM-04</a> (Approve), <a href="04-profile.html#S-PROF-03" class="text-blue-600">S-PROF-03</a> (User profile)<br><br>
+            <strong>PENDING:</strong> Approve & Reject buttons visible<br>
+            <strong>APPROVED:</strong> Shows "View content" button<br>
+            <strong>REJECTED:</strong> Shows rejection reason
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Clear Error Recovery principle - Clear approve/reject paths with visual distinction. Rejection requires reason (prevents accidental rejection). User email shown for spam detection."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/admin/content-requests/{id}<br>
+            <strong>Approve:</strong> Redirect to form with ?request={id}<br>
+            <strong>Reject:</strong> PUT /api/admin/content-requests/{id}/reject { reason: string }<br>
+            <strong>User info:</strong> Includes email for admin visibility
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Actions by Status</h4>
+            <div class="text-xs text-gray-600 space-y-1">
+              <p><span class="badge badge-warning">PENDING</span> → Approve / Reject buttons</p>
+              <p><span class="badge badge-success">APPROVED</span> → View content button</p>
+              <p><span class="badge badge-danger">REJECTED</span> → Shows reason only</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-04: Content Creation Form -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-04">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-04</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Creation Form</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn active" onclick="showState('S-ADM-04', 'empty', this)">Empty</button>
+          <button class="state-btn" onclick="showState('S-ADM-04', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-04', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-04', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-04', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (New form) -->
+              <div data-state="empty" class="visible">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Add New Content</h1>
+                  
+                  <form class="space-y-6">
+                    <!-- Required Fields -->
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Required Information</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-primary">
+                          <label>Title<span class="required-mark">*</span></label>
+                          <input type="text" placeholder="Enter content title" class="w-full">
+                        </div>
+                        
+                        <div class="field-primary">
+                          <label>Slug<span class="text-gray-400 text-xs ml-1">(auto-generated)</span></label>
+                          <input type="text" placeholder="url-friendly-title" class="w-full bg-gray-50">
+                          <p class="text-xs text-gray-500 mt-1">URL identifier. Auto-generated from title.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="field-primary">
+                            <label>Type<span class="required-mark">*</span></label>
+                            <select class="w-full">
+                              <option value="">Select type...</option>
+                              <option value="drama">K-Drama</option>
+                              <option value="movie">K-Movie</option>
+                            </select>
+                          </div>
+                          <div class="field-primary">
+                            <label>Year<span class="required-mark">*</span></label>
+                            <input type="number" placeholder="2024" class="w-full" min="1900" max="2026">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Content Details -->
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Content Details</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-secondary">
+                          <label>Synopsis</label>
+                          <textarea placeholder="Brief description of the content..." class="w-full h-24"></textarea>
+                        </div>
+                        
+                        <div class="field-secondary">
+                          <label>Poster URL</label>
+                          <input type="url" placeholder="https://example.com/poster.jpg" class="w-full">
+                        </div>
+                        
+                        <div>
+                          <label class="block text-sm font-semibold text-gray-700 mb-2">Genres</label>
+                          <div class="flex flex-wrap gap-1">
+                            <span class="genre-tag">Romance</span>
+                            <span class="genre-tag">Drama</span>
+                            <span class="genre-tag">Comedy</span>
+                            <span class="genre-tag">Thriller</span>
+                            <span class="genre-tag">Mystery</span>
+                            <span class="genre-tag">Horror</span>
+                            <span class="genre-tag">Fantasy</span>
+                            <span class="genre-tag">Action</span>
+                            <span class="genre-tag">Historical</span>
+                            <span class="genre-tag">Medical</span>
+                            <span class="genre-tag">Legal</span>
+                            <span class="genre-tag">School</span>
+                            <span class="genre-tag">Slice of Life</span>
+                            <span class="genre-tag">Sci-Fi</span>
+                          </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="field-secondary">
+                            <label>Episodes <span class="text-gray-400 text-xs">(Drama only)</span></label>
+                            <input type="number" placeholder="16" class="w-full" min="1">
+                          </div>
+                          <div class="field-secondary">
+                            <label>Duration <span class="text-gray-400 text-xs">(Movie, in minutes)</span></label>
+                            <input type="number" placeholder="120" class="w-full" min="1">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Additional Info -->
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Additional Information</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-secondary">
+                          <label>Cast</label>
+                          <input type="text" placeholder="Actor 1, Actor 2, Actor 3" class="w-full">
+                          <p class="text-xs text-gray-500 mt-1">Comma-separated list of main cast</p>
+                        </div>
+                        
+                        <div class="field-secondary">
+                          <label>Country</label>
+                          <input type="text" value="South Korea" class="w-full">
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-ADM-06" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Create Content</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (From request - pre-filled) -->
+              <div data-state="populated">
+                <div class="max-w-2xl mx-auto">
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <p class="text-sm text-blue-800">
+                      <strong>From Request:</strong> Creating content from user request by kdrama_fan_2024
+                    </p>
+                  </div>
+                  
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Add New Content</h1>
+                  
+                  <form class="space-y-6">
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Required Information</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-primary">
+                          <label>Title<span class="required-mark">*</span></label>
+                          <input type="text" value="Sky Castle" class="w-full">
+                        </div>
+                        
+                        <div class="field-primary">
+                          <label>Slug</label>
+                          <input type="text" value="sky-castle" class="w-full bg-gray-50">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="field-primary">
+                            <label>Type<span class="required-mark">*</span></label>
+                            <select class="w-full">
+                              <option value="drama" selected>K-Drama</option>
+                              <option value="movie">K-Movie</option>
+                            </select>
+                          </div>
+                          <div class="field-primary">
+                            <label>Year<span class="required-mark">*</span></label>
+                            <input type="number" value="2018" class="w-full">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Content Details</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-secondary">
+                          <label>Synopsis</label>
+                          <textarea class="w-full h-24">This is a very popular K-drama that should be in the catalog. It won multiple awards.</textarea>
+                        </div>
+                        
+                        <div>
+                          <label class="block text-sm font-semibold text-gray-700 mb-2">Genres</label>
+                          <div class="flex flex-wrap gap-1">
+                            <span class="genre-tag selected">Drama</span>
+                            <span class="genre-tag selected">Thriller</span>
+                            <span class="genre-tag">Romance</span>
+                            <span class="genre-tag">Comedy</span>
+                            <span class="genre-tag">Mystery</span>
+                          </div>
+                        </div>
+                        
+                        <div class="field-secondary">
+                          <label>Episodes</label>
+                          <input type="number" value="20" class="w-full">
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-ADM-06" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Create Content</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="max-w-2xl mx-auto">
+                  <div class="h-8 w-48 skeleton mb-6"></div>
+                  <div class="space-y-6">
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                      <div class="h-12 skeleton"></div>
+                      <div class="h-12 skeleton"></div>
+                    </div>
+                    <div class="h-24 w-full skeleton"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Add New Content</h1>
+                  
+                  <div class="alert alert-error mb-4">
+                    Failed to create content. Please try again.
+                  </div>
+                  
+                  <form class="space-y-6 opacity-50">
+                    <div class="field-primary">
+                      <label>Title<span class="required-mark">*</span></label>
+                      <input type="text" value="Sky Castle" class="w-full border-red-300">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-ADM-06" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Create Content</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="max-w-2xl mx-auto text-center py-16">
+                  <div class="text-5xl mb-4">✅</div>
+                  <h1 class="text-2xl font-bold text-gray-900 mb-2">Content Created!</h1>
+                  <p class="text-gray-600 mb-6">"Sky Castle" has been added to the catalog.</p>
+                  <a href="#S-ADM-06" class="btn btn-primary">Back to Catalog</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Dashboard / Request</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Content Form</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Catalog</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-ADM-01" class="text-blue-600">S-ADM-01</a>, <a href="#S-ADM-02" class="text-blue-600">S-ADM-02</a>, <a href="#S-ADM-03" class="text-blue-600">S-ADM-03</a><br>
+            <strong>→ To:</strong> <a href="#S-ADM-06" class="text-blue-600">S-ADM-06</a> (Catalog on save)<br><br>
+            <strong>From request:</strong> Form pre-filled with title, type, year, notes<br>
+            <strong>Conditional fields:</strong> Episodes (Drama) / Duration (Movie)
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Error Prevention First principle - Clear required/optional distinction. Slug auto-generated but editable. Genre multi-select prevents typos. Conditional fields based on type."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> POST /api/admin/content<br>
+            <strong>Validation:</strong><br>
+            - Title: required, 1-255 chars<br>
+            - Type: required (drama/movie)<br>
+            - Year: required, 1900-current+1<br>
+            - Slug: auto-generated from title, unique<br>
+            <strong>From request:</strong> ?request={id} pre-fills form
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Title, Type, Year (required)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Slug, Synopsis, Poster, Genres, Episodes/Duration</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Cast, Country</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-05: Content Edit Form -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-05">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-05</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Edit Form</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn active" onclick="showState('S-ADM-05', 'empty', this)">Empty</button>
+          <button class="state-btn" onclick="showState('S-ADM-05', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-05', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-05', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-05', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 550px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (Not found) -->
+              <div data-state="empty" class="visible">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🔍</div>
+                  <div class="empty-state-title">Content not found.</div>
+                  <div class="empty-state-description">This content may have been deleted.</div>
+                  <a href="#S-ADM-06" class="empty-state-cta">Back to Catalog</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Pre-filled) -->
+              <div data-state="populated">
+                <div class="max-w-2xl mx-auto">
+                  <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Edit Content</h1>
+                    <span class="text-sm text-gray-500">ID: 42</span>
+                  </div>
+                  
+                  <form class="space-y-6">
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Required Information</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-primary">
+                          <label>Title<span class="required-mark">*</span></label>
+                          <input type="text" value="Crash Landing on You" class="w-full">
+                        </div>
+                        
+                        <div class="field-primary">
+                          <label>Slug</label>
+                          <input type="text" value="crash-landing-on-you" class="w-full bg-gray-50" readonly>
+                          <p class="text-xs text-gray-500 mt-1">Slug cannot be changed after creation.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="field-primary">
+                            <label>Type<span class="required-mark">*</span></label>
+                            <select class="w-full">
+                              <option value="drama" selected>K-Drama</option>
+                              <option value="movie">K-Movie</option>
+                            </select>
+                          </div>
+                          <div class="field-primary">
+                            <label>Year<span class="required-mark">*</span></label>
+                            <input type="number" value="2019" class="w-full">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="content-form-section">
+                      <h3 class="content-form-section-title">Content Details</h3>
+                      
+                      <div class="space-y-4">
+                        <div class="field-secondary">
+                          <label>Synopsis</label>
+                          <textarea class="w-full h-24">A South Korean heiress crash-lands in North Korea after a paragliding accident and falls in love with a North Korean army officer.</textarea>
+                        </div>
+                        
+                        <div class="field-secondary">
+                          <label>Poster URL</label>
+                          <input type="url" value="https://example.com/cloy-poster.jpg" class="w-full">
+                        </div>
+                        
+                        <div>
+                          <label class="block text-sm font-semibold text-gray-700 mb-2">Genres</label>
+                          <div class="flex flex-wrap gap-1">
+                            <span class="genre-tag selected">Romance</span>
+                            <span class="genre-tag selected">Drama</span>
+                            <span class="genre-tag selected">Comedy</span>
+                            <span class="genre-tag">Thriller</span>
+                            <span class="genre-tag">Mystery</span>
+                            <span class="genre-tag">Fantasy</span>
+                          </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="field-secondary">
+                            <label>Episodes</label>
+                            <input type="number" value="16" class="w-full">
+                          </div>
+                          <div class="field-secondary">
+                            <label>Cast</label>
+                            <input type="text" value="Hyun Bin, Son Ye-jin, Seo Ji-hye" class="w-full">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-ADM-06" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="max-w-2xl mx-auto">
+                  <div class="h-8 w-32 skeleton mb-6"></div>
+                  <div class="space-y-6">
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="h-12 w-full skeleton"></div>
+                    <div class="h-24 w-full skeleton"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Content</h1>
+                  
+                  <div class="alert alert-error mb-4">
+                    Failed to update content. Please try again.
+                  </div>
+                  
+                  <div class="flex gap-3 pt-4">
+                    <a href="#S-ADM-06" class="btn btn-secondary">Cancel</a>
+                    <button class="btn btn-primary">Save Changes</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Content</h1>
+                  
+                  <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                    <div class="toast">
+                      <div class="toast-icon">✅</div>
+                      <div class="toast-content">
+                        <div class="toast-title">Content Updated!</div>
+                        <div class="toast-message">Changes have been saved.</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-6 opacity-50">
+                    <div class="h-12 w-full bg-gray-100 rounded"></div>
+                    <div class="h-12 w-full bg-gray-100 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Catalog</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Edit Form</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Catalog</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-ADM-06" class="text-blue-600">S-ADM-06</a> (Edit button)<br>
+            <strong>→ To:</strong> <a href="#S-ADM-06" class="text-blue-600">S-ADM-06</a> (Catalog on save)<br><br>
+            <strong>Same fields as Creation Form</strong><br>
+            <strong>Slug:</strong> Read-only (cannot be changed)
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Feedback and System Status principle - Changes reflected immediately on public pages after save. Success toast confirms the action. Slug shown but locked to prevent breaking URLs."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/admin/content/{id}, PUT /api/admin/content/{id}<br>
+            <strong>Slug:</strong> Immutable after creation (URL stability)<br>
+            <strong>Cache invalidation:</strong> Update reflected immediately in public catalog
+          </div>
+          
+          <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-blue-700 mb-3">Edit vs Create</h4>
+            <ul class="text-xs text-blue-800 space-y-1">
+              <li>• All fields pre-filled with current data</li>
+              <li>• Slug is read-only (cannot be changed)</li>
+              <li>• Same validation rules apply</li>
+              <li>• Changes reflect immediately on public pages</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-ADM-06: Catalog Management -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-ADM-06">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-ADM-06</span>
+            <h2 class="text-lg font-bold text-gray-900">Catalog Management</h2>
+            <span class="badge badge-purple">Admin</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-ADM-06', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-ADM-06', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-ADM-06', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-ADM-06', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-ADM-06', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🎬</div>
+                  <div class="empty-state-title">No content in catalog.</div>
+                  <div class="empty-state-description">Add some to get started!</div>
+                  <a href="#S-ADM-04" class="empty-state-cta">Add New Content</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">Catalog Management</h1>
+                  <a href="#S-ADM-04" class="btn btn-primary btn-sm">+ Add New Content</a>
+                </div>
+                
+                <!-- Search and Filters -->
+                <div class="flex gap-4 mb-6">
+                  <div class="flex-1">
+                    <input type="text" placeholder="Search by title..." class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                  </div>
+                  <select class="border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                    <option value="">All Types</option>
+                    <option value="drama">K-Drama</option>
+                    <option value="movie">K-Movie</option>
+                  </select>
+                  <select class="border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                    <option value="created_desc">Newest First</option>
+                    <option value="title_asc">Title (A-Z)</option>
+                    <option value="year_desc">Year (Newest)</option>
+                  </select>
+                </div>
+                
+                <!-- Content Table -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 60px;"></th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Year</th>
+                        <th>Genres</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="w-10 aspect-[2/3] bg-gray-100 rounded flex items-center justify-center text-lg">🎬</div>
+                        </td>
+                        <td class="font-medium">Crash Landing on You</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2019</td>
+                        <td>
+                          <span class="text-xs text-gray-600">Romance, Drama, Comedy</span>
+                        </td>
+                        <td class="text-gray-500">Dec 15, 2024</td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-05" class="text-xs text-blue-600 hover:underline font-medium">Edit</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="w-10 aspect-[2/3] bg-gray-100 rounded flex items-center justify-center text-lg">🎬</div>
+                        </td>
+                        <td class="font-medium">Parasite</td>
+                        <td><span class="badge badge-purple">Movie</span></td>
+                        <td class="text-gray-500">2019</td>
+                        <td>
+                          <span class="text-xs text-gray-600">Thriller, Drama</span>
+                        </td>
+                        <td class="text-gray-500">Dec 14, 2024</td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-05" class="text-xs text-blue-600 hover:underline font-medium">Edit</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="w-10 aspect-[2/3] bg-gray-100 rounded flex items-center justify-center text-lg">🎬</div>
+                        </td>
+                        <td class="font-medium">Reply 1988</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2015</td>
+                        <td>
+                          <span class="text-xs text-gray-600">Drama, Comedy, Slice of Life</span>
+                        </td>
+                        <td class="text-gray-500">Dec 13, 2024</td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-05" class="text-xs text-blue-600 hover:underline font-medium">Edit</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="w-10 aspect-[2/3] bg-gray-100 rounded flex items-center justify-center text-lg">🎬</div>
+                        </td>
+                        <td class="font-medium">Goblin</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2016</td>
+                        <td>
+                          <span class="text-xs text-gray-600">Fantasy, Romance, Drama</span>
+                        </td>
+                        <td class="text-gray-500">Dec 12, 2024</td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-05" class="text-xs text-blue-600 hover:underline font-medium">Edit</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="w-10 aspect-[2/3] bg-gray-100 rounded flex items-center justify-center text-lg">🎬</div>
+                        </td>
+                        <td class="font-medium">Squid Game</td>
+                        <td><span class="badge badge-info">Drama</span></td>
+                        <td class="text-gray-500">2021</td>
+                        <td>
+                          <span class="text-xs text-gray-600">Thriller, Drama</span>
+                        </td>
+                        <td class="text-gray-500">Dec 11, 2024</td>
+                        <td>
+                          <div class="flex gap-2">
+                            <a href="#S-ADM-05" class="text-xs text-blue-600 hover:underline font-medium">Edit</a>
+                            <button class="text-xs text-red-500 hover:underline font-medium">Delete</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-between items-center mt-6">
+                  <p class="text-sm text-gray-500">Showing 1-5 of 87 titles</p>
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-sm" disabled>← Prev</button>
+                    <span class="px-3 py-1 bg-blue-600 text-white rounded text-sm font-semibold">1</span>
+                    <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">2</span>
+                    <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">3</span>
+                    <span class="text-gray-400">...</span>
+                    <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">18</span>
+                    <button class="btn btn-secondary btn-sm">Next →</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="flex justify-between items-center mb-6">
+                  <div class="h-8 w-48 skeleton"></div>
+                  <div class="h-10 w-32 skeleton"></div>
+                </div>
+                <div class="flex gap-4 mb-6">
+                  <div class="flex-1 h-10 skeleton rounded-lg"></div>
+                  <div class="h-10 w-24 skeleton rounded-lg"></div>
+                  <div class="h-10 w-32 skeleton rounded-lg"></div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-xl p-4">
+                  <div class="space-y-4">
+                    <div class="h-16 w-full skeleton"></div>
+                    <div class="h-16 w-full skeleton"></div>
+                    <div class="h-16 w-full skeleton"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Failed to load content.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After delete) -->
+              <div data-state="success">
+                <div class="flex justify-between items-center mb-6">
+                  <h1 class="text-2xl font-bold text-gray-900">Catalog Management</h1>
+                  <a href="#S-ADM-04" class="btn btn-primary btn-sm">+ Add New Content</a>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">🗑️</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Content Deleted</div>
+                      <div class="toast-message">"Test Title" has been removed from the catalog.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4 mb-6 opacity-50">
+                  <div class="flex-1 h-10 bg-gray-100 rounded-lg"></div>
+                  <div class="h-10 w-24 bg-gray-100 rounded-lg"></div>
+                </div>
+                
+                <div class="bg-white border border-gray-200 rounded-xl p-4 opacity-50">
+                  <div class="space-y-4">
+                    <div class="h-16 w-full bg-gray-100 rounded"></div>
+                    <div class="h-16 w-full bg-gray-100 rounded"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Dashboard</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Catalog</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Edit Form</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-ADM-01" class="text-blue-600">S-ADM-01</a>, <a href="#S-ADM-04" class="text-blue-600">S-ADM-04</a>, <a href="#S-ADM-05" class="text-blue-600">S-ADM-05</a><br>
+            <strong>→ To:</strong> <a href="#S-ADM-04" class="text-blue-600">S-ADM-04</a> (Add), <a href="#S-ADM-05" class="text-blue-600">S-ADM-05</a> (Edit)<br><br>
+            <strong>Pagination:</strong> 50 items per page<br>
+            <strong>Delete:</strong> Cascades to all journal entries
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Quick search and filter. Edit/Delete actions inline on each row. Poster thumbnail for visual confirmation. Pagination for large catalogs."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/admin/content?search=&type=&sort=&page=<br>
+            <strong>Delete:</strong> DELETE /api/admin/content/{id}<br>
+            <strong>Cascade delete:</strong> Removes all journal entries for deleted content<br>
+            <strong>Search:</strong> Title field only (case-insensitive)
+          </div>
+          
+          <div class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-red-700 mb-3">Delete Confirmation</h4>
+            <div class="bg-white rounded-lg p-4 text-sm">
+              <p class="font-bold text-gray-900 mb-2">Delete Content</p>
+              <p class="text-gray-600 mb-4 text-xs">Delete 'Crash Landing on You'? This will also remove all journal entries for this content. This cannot be undone.</p>
+              <div class="flex gap-2">
+                <button class="btn btn-secondary btn-sm">Cancel</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Title, Type, Actions (Edit/Delete)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Poster, Year, Genres</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Date added</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+    <p>K-Journal Wireframes | Wave 5: Admin & Content Management | <a href="index.html" class="text-blue-600 hover:underline">Back to Index</a></p>
+  </footer>
+
+  <script>
+    // State switching functionality
+    function showState(screenId, state, btn) {
+      const container = document.getElementById(screenId);
+      if (!container) return;
+      
+      container.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      container.querySelectorAll('[data-state]').forEach(el => {
+        el.classList.remove('visible');
+      });
+      const targetState = container.querySelector(`[data-state="${state}"]`);
+      if (targetState) {
+        targetState.classList.add('visible');
+      }
+    }
+    
+    // Genre tag toggle
+    document.querySelectorAll('.genre-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+  </script>
+</body>
+</html>

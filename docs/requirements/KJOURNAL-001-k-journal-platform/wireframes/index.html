@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Journal Wireframes</title>
+  <link rel="stylesheet" href="_shared.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo">K</div>
+      <span>K-Journal</span>
+    </a>
+    <div class="navbar-center">
+      <input type="text" class="search-bar" placeholder="Search content...">
+    </div>
+    <div class="navbar-right">
+      <a href="01-auth.html" class="btn btn-secondary btn-sm">Log In</a>
+      <a href="01-auth.html#S-AUTH-01" class="btn btn-primary btn-sm">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">K-Journal Wireframes</h1>
+      <p class="text-gray-600">Personal journaling platform for Korean drama and movie enthusiasts</p>
+      <div class="mt-4 flex gap-2">
+        <span class="badge badge-info">KJOURNAL-001</span>
+        <span class="badge badge-success">MVP</span>
+        <span class="badge badge-neutral">5 Waves</span>
+        <span class="badge badge-neutral">23 Screens</span>
+      </div>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="card mb-8">
+      <div class="card-header">
+        <h2 class="text-lg font-bold">Project Overview</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h3 class="font-bold text-gray-700 mb-2">Core Value</h3>
+            <p class="text-gray-600 text-sm">"Track what you watch. Express your taste."</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-700 mb-2">Target Users</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li><span class="badge badge-info">Enthusiast</span> Primary - Track viewing journey</li>
+              <li><span class="badge badge-purple">Admin</span> Secondary - Manage catalog</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-700 mb-2">MVP Scope</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>5 modules</li>
+              <li>50-100 seeded K-dramas/movies</li>
+              <li>Public profiles only</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen Map -->
+    <div class="card mb-8">
+      <div class="card-header">
+        <h2 class="text-lg font-bold">Screen Map</h2>
+      </div>
+      <div class="card-body p-0">
+        <table class="wire-table w-full text-sm">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="text-left p-4 font-bold">ID</th>
+              <th class="text-left p-4 font-bold">Screen Name</th>
+              <th class="text-left p-4 font-bold">Module</th>
+              <th class="text-left p-4 font-bold">Role</th>
+              <th class="text-left p-4 font-bold">Wireframe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Wave 1: Foundation -->
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-AUTH-01</span></td>
+              <td class="p-4">Registration Page</td>
+              <td class="p-4"><span class="badge badge-neutral">AUTH</span></td>
+              <td class="p-4"><span class="badge badge-neutral">Guest</span></td>
+              <td class="p-4"><a href="01-auth.html#S-AUTH-01" class="text-blue-600 hover:underline">01-auth.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-AUTH-02</span></td>
+              <td class="p-4">Login Page</td>
+              <td class="p-4"><span class="badge badge-neutral">AUTH</span></td>
+              <td class="p-4"><span class="badge badge-neutral">Guest</span></td>
+              <td class="p-4"><a href="01-auth.html#S-AUTH-02" class="text-blue-600 hover:underline">01-auth.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-AUTH-03</span></td>
+              <td class="p-4">Forgot Password Page</td>
+              <td class="p-4"><span class="badge badge-neutral">AUTH</span></td>
+              <td class="p-4"><span class="badge badge-neutral">Guest</span></td>
+              <td class="p-4"><a href="01-auth.html#S-AUTH-03" class="text-blue-600 hover:underline">01-auth.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-AUTH-05</span></td>
+              <td class="p-4">Account Settings Page</td>
+              <td class="p-4"><span class="badge badge-neutral">AUTH</span></td>
+              <td class="p-4"><span class="badge badge-info">User, Admin</span></td>
+              <td class="p-4"><a href="01-auth.html#S-AUTH-05" class="text-blue-600 hover:underline">01-auth.html</a></td>
+            </tr>
+            
+            <!-- Wave 2: Content -->
+            <tr class="border-t border-gray-200 bg-blue-50">
+              <td class="p-4" colspan="5"><span class="font-bold text-blue-800">Wave 2: Content Catalog</span></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-01</span></td>
+              <td class="p-4">Homepage</td>
+              <td class="p-4"><span class="badge badge-success">CONTENT</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="02-content.html#S-CAT-01" class="text-blue-600 hover:underline">02-content.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-02</span></td>
+              <td class="p-4">Content Catalog</td>
+              <td class="p-4"><span class="badge badge-success">CONTENT</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="02-content.html#S-CAT-02" class="text-blue-600 hover:underline">02-content.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-03</span></td>
+              <td class="p-4">Content Detail</td>
+              <td class="p-4"><span class="badge badge-success">CONTENT</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="02-content.html#S-CAT-03" class="text-blue-600 hover:underline">02-content.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-04</span></td>
+              <td class="p-4">Search Results</td>
+              <td class="p-4"><span class="badge badge-success">CONTENT</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="02-content.html#S-CAT-04" class="text-blue-600 hover:underline">02-content.html</a></td>
+            </tr>
+            
+            <!-- Wave 3: Journal -->
+            <tr class="border-t border-gray-200 bg-purple-50">
+              <td class="p-4" colspan="5"><span class="font-bold text-purple-800">Wave 3: Journaling</span></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-JRN-01</span></td>
+              <td class="p-4">Personal Journal</td>
+              <td class="p-4"><span class="badge badge-purple">JOURNAL</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="03-journal.html#S-JRN-01" class="text-blue-600 hover:underline">03-journal.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-JRN-02</span></td>
+              <td class="p-4">Journal Entry Form</td>
+              <td class="p-4"><span class="badge badge-purple">JOURNAL</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="03-journal.html#S-JRN-02" class="text-blue-600 hover:underline">03-journal.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-JRN-03</span></td>
+              <td class="p-4">My Favorites</td>
+              <td class="p-4"><span class="badge badge-purple">JOURNAL</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="03-journal.html#S-JRN-03" class="text-blue-600 hover:underline">03-journal.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-05</span></td>
+              <td class="p-4">Content Request Form</td>
+              <td class="p-4"><span class="badge badge-purple">JOURNAL</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="03-journal.html#S-CAT-05" class="text-blue-600 hover:underline">03-journal.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-CAT-06</span></td>
+              <td class="p-4">My Requests</td>
+              <td class="p-4"><span class="badge badge-purple">JOURNAL</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="03-journal.html#S-CAT-06" class="text-blue-600 hover:underline">03-journal.html</a></td>
+            </tr>
+            
+            <!-- Wave 4: Profile -->
+            <tr class="border-t border-gray-200 bg-green-50">
+              <td class="p-4" colspan="5"><span class="font-bold text-green-800">Wave 4: Profiles</span></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-PROF-01</span></td>
+              <td class="p-4">Own Profile (View)</td>
+              <td class="p-4"><span class="badge badge-success">PROFILE</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="04-profile.html#S-PROF-01" class="text-blue-600 hover:underline">04-profile.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-PROF-02</span></td>
+              <td class="p-4">Own Profile (Edit)</td>
+              <td class="p-4"><span class="badge badge-success">PROFILE</span></td>
+              <td class="p-4"><span class="badge badge-info">User</span></td>
+              <td class="p-4"><a href="04-profile.html#S-PROF-02" class="text-blue-600 hover:underline">04-profile.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-PROF-03</span></td>
+              <td class="p-4">Other User Profile</td>
+              <td class="p-4"><span class="badge badge-success">PROFILE</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="04-profile.html#S-PROF-03" class="text-blue-600 hover:underline">04-profile.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-PROF-04</span></td>
+              <td class="p-4">User Search</td>
+              <td class="p-4"><span class="badge badge-success">PROFILE</span></td>
+              <td class="p-4"><span class="badge badge-neutral">All</span></td>
+              <td class="p-4"><a href="04-profile.html#S-PROF-04" class="text-blue-600 hover:underline">04-profile.html</a></td>
+            </tr>
+            
+            <!-- Wave 5: Admin -->
+            <tr class="border-t border-gray-200 bg-orange-50">
+              <td class="p-4" colspan="5"><span class="font-bold text-orange-800">Wave 5: Admin</span></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-01</span></td>
+              <td class="p-4">Admin Dashboard</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-01" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-02</span></td>
+              <td class="p-4">Request Queue</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-02" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-03</span></td>
+              <td class="p-4">Request Detail</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-03" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-04</span></td>
+              <td class="p-4">Content Creation</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-04" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-05</span></td>
+              <td class="p-4">Content Edit</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-05" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+              <td class="p-4"><span class="font-mono text-blue-600 font-bold">S-ADM-06</span></td>
+              <td class="p-4">Catalog Management</td>
+              <td class="p-4"><span class="badge badge-warning">ADMIN</span></td>
+              <td class="p-4"><span class="badge badge-purple">Admin</span></td>
+              <td class="p-4"><a href="05-admin.html#S-ADM-06" class="text-blue-600 hover:underline">05-admin.html</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- User Flows -->
+    <div class="card mb-8">
+      <div class="card-header">
+        <h2 class="text-lg font-bold">Primary User Flows</h2>
+      </div>
+      <div class="card-body">
+        <div class="space-y-6">
+          <!-- Flow 1: Registration -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Flow 1: Guest Registration</h3>
+            <div class="flex items-center gap-3 text-sm flex-wrap">
+              <span class="badge badge-neutral">Guest</span>
+              <span class="text-gray-400">→</span>
+              <a href="01-auth.html#S-AUTH-01" class="text-blue-600 hover:underline">S-AUTH-01 Registration</a>
+              <span class="text-gray-400">→</span>
+              <span class="badge badge-success">Auto-login</span>
+              <span class="text-gray-400">→</span>
+              <a href="03-journal.html#S-JRN-01" class="text-blue-600 hover:underline">S-JRN-01 Personal Journal</a>
+            </div>
+          </div>
+          
+          <!-- Flow 2: Content Discovery -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Flow 2: Content Discovery & Journal Entry</h3>
+            <div class="flex items-center gap-3 text-sm flex-wrap">
+              <a href="02-content.html#S-CAT-01" class="text-blue-600 hover:underline">S-CAT-01 Homepage</a>
+              <span class="text-gray-400">→</span>
+              <a href="02-content.html#S-CAT-02" class="text-blue-600 hover:underline">S-CAT-02 Catalog</a>
+              <span class="text-gray-400">→</span>
+              <a href="02-content.html#S-CAT-03" class="text-blue-600 hover:underline">S-CAT-03 Content Detail</a>
+              <span class="text-gray-400">→</span>
+              <a href="03-journal.html#S-JRN-02" class="text-blue-600 hover:underline">S-JRN-02 Journal Entry</a>
+            </div>
+          </div>
+          
+          <!-- Flow 3: Content Request -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Flow 3: Content Request Pipeline</h3>
+            <div class="flex items-center gap-3 text-sm flex-wrap">
+              <a href="02-content.html#S-CAT-04" class="text-blue-600 hover:underline">S-CAT-04 Search (no results)</a>
+              <span class="text-gray-400">→</span>
+              <a href="03-journal.html#S-CAT-05" class="text-blue-600 hover:underline">S-CAT-05 Request Form</a>
+              <span class="text-gray-400">→</span>
+              <a href="03-journal.html#S-CAT-06" class="text-blue-600 hover:underline">S-CAT-06 My Requests</a>
+              <span class="text-gray-400">→</span>
+              <span class="badge badge-warning">Admin Review</span>
+              <span class="text-gray-400">→</span>
+              <a href="02-content.html#S-CAT-03" class="text-blue-600 hover:underline">S-CAT-03 Content Detail</a>
+            </div>
+          </div>
+          
+          <!-- Flow 4: Admin Content Management -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Flow 4: Admin Content Management</h3>
+            <div class="flex items-center gap-3 text-sm flex-wrap">
+              <a href="05-admin.html#S-ADM-01" class="text-blue-600 hover:underline">S-ADM-01 Dashboard</a>
+              <span class="text-gray-400">→</span>
+              <a href="05-admin.html#S-ADM-02" class="text-blue-600 hover:underline">S-ADM-02 Request Queue</a>
+              <span class="text-gray-400">→</span>
+              <a href="05-admin.html#S-ADM-03" class="text-blue-600 hover:underline">S-ADM-03 Request Detail</a>
+              <span class="text-gray-400">→</span>
+              <a href="05-admin.html#S-ADM-04" class="text-blue-600 hover:underline">S-ADM-04 Content Creation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="text-lg font-bold">Legend</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Role Badges -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Roles</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-neutral">Guest</span>
+              <span class="badge badge-info">User</span>
+              <span class="badge badge-purple">Admin</span>
+            </div>
+          </div>
+          
+          <!-- Module Badges -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Modules</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-neutral">AUTH</span>
+              <span class="badge badge-success">CONTENT</span>
+              <span class="badge badge-purple">JOURNAL</span>
+              <span class="badge badge-info">PROFILE</span>
+              <span class="badge badge-warning">ADMIN</span>
+            </div>
+          </div>
+          
+          <!-- Watch Status -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Watch Status</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-watching">WATCHING</span>
+              <span class="badge badge-completed">COMPLETED</span>
+              <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+              <span class="badge badge-dropped">DROPPED</span>
+            </div>
+          </div>
+          
+          <!-- Request Status -->
+          <div>
+            <h3 class="font-bold text-gray-700 mb-3">Request Status</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-warning">PENDING</span>
+              <span class="badge badge-success">APPROVED</span>
+              <span class="badge badge-danger">REJECTED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+    <p>K-Journal Wireframes | Project: KJOURNAL-001-k-journal-platform | Status: In Progress</p>
+  </footer>
+
+  <script>
+    // State switching functionality
+    function showState(screenId, state, btn) {
+      // Update buttons
+      const container = document.getElementById(screenId);
+      if (!container) return;
+      
+      container.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      // Update state visibility
+      container.querySelectorAll('[data-state]').forEach(el => {
+        el.classList.remove('visible');
+      });
+      const targetState = container.querySelector(`[data-state="${state}"]`);
+      if (targetState) {
+        targetState.classList.add('visible');
+      }
+    }
+  </script>
+</body>
+</html>

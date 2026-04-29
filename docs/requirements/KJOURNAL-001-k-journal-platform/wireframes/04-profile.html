@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Journal - Profile Wireframes</title>
+  <link rel="stylesheet" href="_shared.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Content Card Styles */
+    .content-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-wire-border);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .content-card-poster {
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 48px;
+    }
+    .content-card-body {
+      padding: 12px;
+    }
+    .content-card-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-wire-text);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    /* Rating Stars */
+    .rating-stars {
+      color: #f59e0b;
+      letter-spacing: -2px;
+    }
+    
+    /* Profile Header */
+    .profile-header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      padding: 32px;
+      border-radius: 16px;
+      color: white;
+      margin-bottom: 24px;
+    }
+    
+    /* Avatar */
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      border: 4px solid white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .avatar-sm {
+      width: 48px;
+      height: 48px;
+      font-size: 18px;
+    }
+    .avatar-lg {
+      width: 120px;
+      height: 120px;
+      font-size: 48px;
+    }
+    
+    /* Stats Card */
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-wire-text);
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-wire-muted);
+      margin-top: 4px;
+    }
+    
+    /* Profile Favorite Card */
+    .profile-favorite-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .profile-favorite-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    
+    /* Journal Entry Card (Profile) */
+    .profile-entry-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      transition: box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .profile-entry-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .profile-entry-poster {
+      width: 60px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+    
+    /* User Card */
+    .user-card {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .user-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    /* Favorite Selector Slot */
+    .favorite-slot {
+      width: 100px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .favorite-slot:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .favorite-slot.filled {
+      border: none;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .favorite-slot .slot-number {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #3b82f6;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    
+    /* Character Counter */
+    .char-counter {
+      font-size: 12px;
+      color: var(--text-wire-muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+    .char-counter.warning {
+      color: #f59e0b;
+    }
+    .char-counter.error {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  
+  <!-- Navigation Bar (Logged In State) -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo">K</div>
+      <span>K-Journal</span>
+    </a>
+    <div class="navbar-center">
+      <input type="text" class="search-bar" placeholder="Search for K-dramas, K-movies...">
+    </div>
+    <div class="navbar-right">
+      <a href="03-journal.html#S-JRN-01" class="text-sm font-semibold text-gray-700 hover:text-blue-600">My Journal</a>
+      <div class="flex items-center gap-2 ml-4">
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold text-sm">K</div>
+        <div class="relative group">
+          <button class="text-sm text-gray-600">▼</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    
+    <!-- Module Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-sm font-mono font-bold text-green-600">WAVE 4</span>
+        <h1 class="text-2xl font-bold text-gray-900">User Profiles & Social Discovery</h1>
+      </div>
+      <p class="text-gray-600">Profile viewing, editing, and user search</p>
+      <div class="mt-3 flex gap-2">
+        <span class="badge badge-success">PROFILE</span>
+        <span class="badge badge-info">4 Screens</span>
+        <span class="badge badge-neutral">All Roles</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-PROF-01: Own Profile (View) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-PROF-01">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-PROF-01</span>
+            <h2 class="text-lg font-bold text-gray-900">Own Profile (View)</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-PROF-01', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-PROF-01', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-PROF-01', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-PROF-01', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-PROF-01', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 650px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (New user - no favorites, no entries) -->
+              <div data-state="empty">
+                <div class="profile-header text-center">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg mb-4">K</div>
+                    <h1 class="text-2xl font-bold mb-1">kdrama_fan_2024</h1>
+                    <p class="text-gray-300 text-sm">No bio yet</p>
+                  </div>
+                  <div class="mt-6">
+                    <a href="#S-PROF-02" class="btn bg-white text-gray-900 hover:bg-gray-100">Edit Profile</a>
+                  </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Total Logged</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value text-gray-400">—</div>
+                    <div class="stat-label">Mean Rating</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Favorites</div>
+                  </div>
+                </div>
+                
+                <!-- Empty Favorites -->
+                <div class="mb-8">
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Profile Favorites</h2>
+                  <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center">
+                    <p class="text-gray-600 mb-4">Add favorites to showcase your top picks here.</p>
+                    <a href="03-journal.html#S-JRN-03" class="btn btn-primary">Go to Favorites</a>
+                  </div>
+                </div>
+                
+                <!-- Empty Journal -->
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Journal</h2>
+                  <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center">
+                    <p class="text-gray-600 mb-4">No entries yet. Start tracking your K-dramas and K-movies!</p>
+                    <a href="02-content.html#S-CAT-02" class="btn btn-primary">Browse Catalog</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <div class="profile-header text-center">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg mb-4">K</div>
+                    <h1 class="text-2xl font-bold mb-1">kdrama_fan_2024</h1>
+                    <p class="text-gray-300 text-sm max-w-md">K-drama enthusiast | Romance & Thriller lover | Currently watching too many shows 🎬</p>
+                  </div>
+                  <div class="mt-6">
+                    <a href="#S-PROF-02" class="btn bg-white text-gray-900 hover:bg-gray-100">Edit Profile</a>
+                  </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="stat-card">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Total Logged</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="flex items-center justify-center gap-2">
+                      <span class="rating-stars text-lg">★★★★★</span>
+                      <span class="stat-value">4.3</span>
+                    </div>
+                    <div class="stat-label">Mean Rating</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Favorites</div>
+                  </div>
+                </div>
+                
+                <!-- Profile Favorites -->
+                <div class="mb-8">
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Profile Favorites</h2>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Crash Landing on You</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Reply 1988</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Parasite</p>
+                        <span class="badge badge-purple text-xs">Movie</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Goblin</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                
+                <!-- Journal Entries -->
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Journal <span class="text-gray-400">(23)</span></h2>
+                  <div class="space-y-4">
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">Crash Landing on You</h3>
+                          <span class="badge badge-watching">WATCHING</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="rating-stars">★★★★★</span>
+                          <span class="text-sm font-medium">5.0</span>
+                        </div>
+                        <p class="text-sm text-gray-600 line-clamp-1">One of the best K-dramas I've ever watched!</p>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">Reply 1988</h3>
+                          <span class="badge badge-completed">COMPLETED</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="rating-stars">★★★★★</span>
+                          <span class="text-sm font-medium">5.0</span>
+                        </div>
+                        <p class="text-sm text-gray-600 line-clamp-1">A heartwarming story about family and friendship.</p>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">The Glory</h3>
+                          <span class="badge badge-plan-to-watch">PLAN_TO_WATCH</span>
+                        </div>
+                        <div class="text-sm text-gray-400">Not rated yet</div>
+                      </div>
+                    </a>
+                  </div>
+                  
+                  <!-- Pagination -->
+                  <div class="flex justify-center mt-6">
+                    <button class="btn btn-secondary btn-sm">Load More</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="profile-header opacity-50">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg skeleton mb-4" style="border-radius: 50%;"></div>
+                    <div class="h-8 w-48 skeleton mb-2"></div>
+                    <div class="h-4 w-64 skeleton"></div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                </div>
+                
+                <div class="mb-8">
+                  <div class="h-6 w-36 skeleton mb-4"></div>
+                  <div class="grid grid-cols-4 gap-4">
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="h-6 w-24 skeleton mb-4"></div>
+                  <div class="space-y-4">
+                    <div class="profile-entry-card opacity-50">
+                      <div class="profile-entry-poster skeleton"></div>
+                      <div class="flex-1">
+                        <div class="h-5 w-48 skeleton mb-2"></div>
+                        <div class="h-4 w-32 skeleton"></div>
+                      </div>
+                    </div>
+                    <div class="profile-entry-card opacity-50">
+                      <div class="profile-entry-poster skeleton"></div>
+                      <div class="flex-1">
+                        <div class="h-5 w-48 skeleton mb-2"></div>
+                        <div class="h-4 w-32 skeleton"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load profile.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After save) -->
+              <div data-state="success">
+                <div class="profile-header text-center">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg mb-4">K</div>
+                    <h1 class="text-2xl font-bold mb-1">kdrama_fan_2024</h1>
+                    <p class="text-gray-300 text-sm max-w-md">K-drama enthusiast | Romance & Thriller lover | Currently watching too many shows 🎬</p>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin: 16px 0;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Profile Updated!</div>
+                      <div class="toast-message">Your changes have been saved.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8 opacity-50">
+                  <div class="stat-card"><div class="stat-value">23</div></div>
+                  <div class="stat-card"><div class="stat-value">4.3</div></div>
+                  <div class="stat-card"><div class="stat-value">8</div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Navigation</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Own Profile</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Edit Profile</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Navigation menu, Settings<br>
+            <strong>→ To:</strong> <a href="#S-PROF-02" class="text-blue-600">S-PROF-02</a> (Edit), <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail)<br><br>
+            <strong>View as others see it:</strong> "Edit Profile" button visible only to owner
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Recognition over Recall principle - User sees exactly what others see. Clear 'Edit Profile' button for quick access. Empty states provide actionable CTAs (Go to Favorites, Browse Catalog)."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/user/profile<br>
+            <strong>Stats computed:</strong><br>
+            - Total logged: COUNT(journal_entries)<br>
+            - Mean rating: AVG(rating) WHERE rating IS NOT NULL<br>
+            - Favorites: COUNT WHERE is_favorite = true<br>
+            <strong>Profile favorites:</strong> Stored in UserProfile.profile_favorites (ordered array)
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Username, Profile favorites, Journal entries</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Stats, Bio, Avatar</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-PROF-02: Own Profile (Edit) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-PROF-02">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-PROF-02</span>
+            <h2 class="text-lg font-bold text-gray-900">Own Profile (Edit)</h2>
+            <span class="badge badge-info">User</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn active" onclick="showState('S-PROF-02', 'empty', this)">Empty</button>
+          <button class="state-btn" onclick="showState('S-PROF-02', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-PROF-02', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-PROF-02', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-PROF-02', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 550px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (New user editing) -->
+              <div data-state="empty" class="visible">
+                <div class="max-w-2xl mx-auto">
+                  <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Edit Profile</h1>
+                    <a href="#S-PROF-01" class="text-sm text-blue-600 hover:underline">← Back to Profile</a>
+                  </div>
+                  
+                  <form class="space-y-6">
+                    <!-- Avatar URL -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Avatar URL</label>
+                      <input type="url" placeholder="https://example.com/your-avatar.jpg" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                      <p class="text-xs text-gray-500 mt-2">Enter a URL to an image for your avatar. Leave empty for default.</p>
+                    </div>
+                    
+                    <!-- Bio -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Bio</label>
+                      <textarea placeholder="Tell others about yourself..." class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm h-24" maxlength="160"></textarea>
+                      <div class="char-counter">0/160</div>
+                    </div>
+                    
+                    <!-- Profile Favorites -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Profile Favorites</label>
+                      <p class="text-sm text-gray-600 mb-4">Select up to 4 favorites to display on your public profile.</p>
+                      
+                      <!-- No favorites message -->
+                      <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
+                        <p class="text-gray-600 mb-4">Mark some content as favorites in your journal to display them here.</p>
+                        <a href="03-journal.html#S-JRN-03" class="btn btn-secondary">Go to Favorites</a>
+                      </div>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-PROF-01" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (User with favorites) -->
+              <div data-state="populated">
+                <div class="max-w-2xl mx-auto">
+                  <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Edit Profile</h1>
+                    <a href="#S-PROF-01" class="text-sm text-blue-600 hover:underline">← Back to Profile</a>
+                  </div>
+                  
+                  <form class="space-y-6">
+                    <!-- Avatar URL -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Avatar URL</label>
+                      <input type="url" value="https://example.com/avatar.jpg" placeholder="https://example.com/your-avatar.jpg" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                      <p class="text-xs text-gray-500 mt-2">Enter a URL to an image for your avatar. Leave empty for default.</p>
+                    </div>
+                    
+                    <!-- Bio -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Bio</label>
+                      <textarea placeholder="Tell others about yourself..." class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm h-24" maxlength="160">K-drama enthusiast | Romance & Thriller lover | Currently watching too many shows 🎬</textarea>
+                      <div class="char-counter">78/160</div>
+                    </div>
+                    
+                    <!-- Profile Favorites Selector -->
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Profile Favorites</label>
+                      <p class="text-sm text-gray-600 mb-4">Select up to 4 favorites to display on your public profile.</p>
+                      
+                      <!-- Selected Slots -->
+                      <div class="mb-4">
+                        <p class="text-xs font-semibold text-gray-500 uppercase mb-2">Selected (4/4)</p>
+                        <div class="flex gap-3 flex-wrap">
+                          <div class="favorite-slot filled">
+                            <span class="slot-number">1</span>
+                            <div class="w-full h-full flex flex-col">
+                              <div class="flex-1 flex items-center justify-center text-2xl">🎬</div>
+                              <div class="bg-white p-1 text-center border-t">
+                                <p class="text-xs text-gray-900 truncate">Crash Landing</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="favorite-slot filled">
+                            <span class="slot-number">2</span>
+                            <div class="w-full h-full flex flex-col">
+                              <div class="flex-1 flex items-center justify-center text-2xl">🎬</div>
+                              <div class="bg-white p-1 text-center border-t">
+                                <p class="text-xs text-gray-900 truncate">Reply 1988</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="favorite-slot filled">
+                            <span class="slot-number">3</span>
+                            <div class="w-full h-full flex flex-col">
+                              <div class="flex-1 flex items-center justify-center text-2xl">🎬</div>
+                              <div class="bg-white p-1 text-center border-t">
+                                <p class="text-xs text-gray-900 truncate">Parasite</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="favorite-slot filled">
+                            <span class="slot-number">4</span>
+                            <div class="w-full h-full flex flex-col">
+                              <div class="flex-1 flex items-center justify-center text-2xl">🎬</div>
+                              <div class="bg-white p-1 text-center border-t">
+                                <p class="text-xs text-gray-900 truncate">Goblin</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Available Favorites -->
+                      <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase mb-2">All Favorites (8)</p>
+                        <div class="grid grid-cols-4 md:grid-cols-6 gap-3">
+                          <div class="favorite-slot filled" style="border: 2px solid #3b82f6;">
+                            <span class="slot-number">1</span>
+                            <div class="text-xl">🎬</div>
+                          </div>
+                          <div class="favorite-slot filled" style="border: 2px solid #3b82f6;">
+                            <span class="slot-number">2</span>
+                            <div class="text-xl">🎬</div>
+                          </div>
+                          <div class="favorite-slot filled" style="border: 2px solid #3b82f6;">
+                            <span class="slot-number">3</span>
+                            <div class="text-xl">🎬</div>
+                          </div>
+                          <div class="favorite-slot filled" style="border: 2px solid #3b82f6;">
+                            <span class="slot-number">4</span>
+                            <div class="text-xl">🎬</div>
+                          </div>
+                          <div class="favorite-slot">
+                            <div class="text-xl">🎬</div>
+                            <p class="text-xs truncate px-1">My Demon</p>
+                          </div>
+                          <div class="favorite-slot">
+                            <div class="text-xl">🎬</div>
+                            <p class="text-xs truncate px-1">The Glory</p>
+                          </div>
+                          <div class="favorite-slot">
+                            <div class="text-xl">🎬</div>
+                            <p class="text-xs truncate px-1">Itaewon</p>
+                          </div>
+                          <div class="favorite-slot">
+                            <div class="text-xl">🎬</div>
+                            <p class="text-xs truncate px-1">Hospital</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <p class="text-xs text-gray-500 mt-3">Click a favorite to add/remove from profile slots.</p>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                      <a href="#S-PROF-01" class="btn btn-secondary">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="max-w-2xl mx-auto">
+                  <div class="h-8 w-32 skeleton mb-6"></div>
+                  <div class="space-y-6">
+                    <div>
+                      <div class="h-5 w-24 skeleton mb-2"></div>
+                      <div class="h-12 w-full skeleton rounded-lg"></div>
+                    </div>
+                    <div>
+                      <div class="h-5 w-12 skeleton mb-2"></div>
+                      <div class="h-24 w-full skeleton rounded-lg"></div>
+                    </div>
+                    <div>
+                      <div class="h-5 w-32 skeleton mb-4"></div>
+                      <div class="flex gap-3">
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                        <div class="favorite-slot skeleton"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Profile</h1>
+                  
+                  <div class="alert alert-error mb-4">
+                    Unable to save. Please try again.
+                  </div>
+                  
+                  <form class="space-y-6 opacity-50">
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Avatar URL</label>
+                      <input type="url" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-semibold text-gray-700 mb-2">Bio</label>
+                      <textarea class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm h-24"></textarea>
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                      <button class="btn btn-secondary">Cancel</button>
+                      <button class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="max-w-2xl mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Profile</h1>
+                  
+                  <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                    <div class="toast">
+                      <div class="toast-icon">✅</div>
+                      <div class="toast-content">
+                        <div class="toast-title">Profile Updated!</div>
+                        <div class="toast-message">Redirecting to your profile...</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="space-y-6 opacity-50">
+                    <div class="h-12 w-full bg-gray-100 rounded-lg"></div>
+                    <div class="h-24 w-full bg-gray-100 rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Own Profile</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Edit Profile</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Own Profile</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-PROF-01" class="text-blue-600">S-PROF-01</a> (Edit button)<br>
+            <strong>→ To:</strong> <a href="#S-PROF-01" class="text-blue-600">S-PROF-01</a> (on Save/Cancel)<br><br>
+            <strong>Profile favorites:</strong> Max 4, selected from favorites in journal
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Error Prevention First principle - Character counter for bio (160 max). Max 4 favorites enforced with visual feedback. Selected favorites show slot number for ordering."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> PUT /api/user/profile<br>
+            <strong>Validation:</strong><br>
+            - Avatar URL: valid URL format (optional)<br>
+            - Bio: max 160 characters<br>
+            - Profile favorites: array of max 4 content IDs<br>
+            <strong>MVP:</strong> Avatar URL only (no upload)
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Profile favorites (max 4 slots)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Bio (160 chars), Avatar URL</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-blue-700 mb-3">Profile Favorites Selection</h4>
+            <ul class="text-xs text-blue-800 space-y-1">
+              <li>• Select from all favorited content</li>
+              <li>• Max 4 slots for public profile</li>
+              <li>• Click to add/remove from slots</li>
+              <li>• Slot number = display order</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-PROF-03: Other User Profile -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-PROF-03">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-PROF-03</span>
+            <h2 class="text-lg font-bold text-gray-900">Other User Profile</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-PROF-03', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-PROF-03', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-PROF-03', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-PROF-03', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-PROF-03', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (User not found) -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🔍</div>
+                  <div class="empty-state-title">User not found.</div>
+                  <div class="empty-state-description">The username may have been changed or the account deleted.</div>
+                  <a href="#S-PROF-04" class="empty-state-cta">Search Users</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <div class="profile-header text-center">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg mb-4" style="background: #8b5cf6;">S</div>
+                    <h1 class="text-2xl font-bold mb-1">seoul_drama_lover</h1>
+                    <p class="text-gray-300 text-sm max-w-md">Romance & Melodrama addict 🌸 | Always looking for the next binge-worthy series!</p>
+                  </div>
+                  <!-- No Edit button for other users -->
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="stat-card">
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Total Logged</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="flex items-center justify-center gap-2">
+                      <span class="rating-stars text-lg">★★★★★</span>
+                      <span class="stat-value">4.1</span>
+                    </div>
+                    <div class="stat-label">Mean Rating</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Favorites</div>
+                  </div>
+                </div>
+                
+                <!-- Profile Favorites -->
+                <div class="mb-8">
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Profile Favorites</h2>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">My Love from the Star</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Descendants of the Sun</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">What's Wrong with Secretary Kim</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                    <a href="02-content.html#S-CAT-03" class="profile-favorite-card">
+                      <div class="aspect-[2/3] bg-gray-100 flex items-center justify-center text-4xl">🎬</div>
+                      <div class="p-3">
+                        <p class="font-semibold text-sm text-gray-900 truncate">Heirs</p>
+                        <span class="badge badge-info text-xs">Drama</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                
+                <!-- Journal Entries -->
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Journal <span class="text-gray-400">(47)</span></h2>
+                  <div class="space-y-4">
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">My Love from the Star</h3>
+                          <span class="badge badge-completed">COMPLETED</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="rating-stars">★★★★★</span>
+                          <span class="text-sm font-medium">5.0</span>
+                        </div>
+                        <p class="text-sm text-gray-600 line-clamp-1">Absolutely loved this drama! The chemistry was perfect.</p>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">Descendants of the Sun</h3>
+                          <span class="badge badge-completed">COMPLETED</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="rating-stars">★★★★☆</span>
+                          <span class="text-sm font-medium">4.5</span>
+                        </div>
+                        <p class="text-sm text-gray-600 line-clamp-1">Great action and romance blend!</p>
+                      </div>
+                    </a>
+                    
+                    <a href="02-content.html#S-CAT-03" class="profile-entry-card block">
+                      <div class="profile-entry-poster text-2xl">🎬</div>
+                      <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                          <h3 class="font-semibold text-gray-900">The King: Eternal Monarch</h3>
+                          <span class="badge badge-watching">WATCHING</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="rating-stars">★★★★☆</span>
+                          <span class="text-sm font-medium">4.0</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  
+                  <div class="flex justify-center mt-6">
+                    <button class="btn btn-secondary btn-sm">Load More</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="profile-header opacity-50">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg skeleton mb-4" style="border-radius: 50%;"></div>
+                    <div class="h-8 w-48 skeleton mb-2"></div>
+                    <div class="h-4 w-64 skeleton"></div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                  <div class="stat-card"><div class="h-8 w-16 skeleton mx-auto"></div></div>
+                </div>
+                
+                <div class="mb-8">
+                  <div class="h-6 w-36 skeleton mb-4"></div>
+                  <div class="grid grid-cols-4 gap-4">
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load profile.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE -->
+              <div data-state="success">
+                <div class="profile-header text-center">
+                  <div class="flex flex-col items-center">
+                    <div class="avatar-lg mb-4" style="background: #8b5cf6;">S</div>
+                    <h1 class="text-2xl font-bold mb-1">seoul_drama_lover</h1>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin: 16px 0;">
+                  <div class="toast">
+                    <div class="toast-icon">👤</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Found user!</div>
+                      <div class="toast-message">Viewing seoul_drama_lover's profile</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-8 opacity-50">
+                  <div class="stat-card"><div class="stat-value">47</div></div>
+                  <div class="stat-card"><div class="stat-value">4.1</div></div>
+                  <div class="stat-card"><div class="stat-value">12</div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">User Search</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Other Profile</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-PROF-04" class="text-blue-600">S-PROF-04</a> (User Search), Direct URL<br>
+            <strong>→ To:</strong> <a href="02-content.html#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail)<br><br>
+            <strong>No edit button:</strong> View-only for other users' profiles
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Momentum Through the Flow principle - Easy to click favorites/entries to explore content. Same layout as Own Profile but without edit action, making comparison easy."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/users/{username}<br>
+            <strong>URL pattern:</strong> /user/{username} (case-insensitive)<br>
+            <strong>404 handling:</strong> "User not found" message<br>
+            <strong>All profiles public:</strong> No private entries in MVP
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Differences from Own Profile</h4>
+            <ul class="text-xs text-gray-600 space-y-1">
+              <li>• No "Edit Profile" button</li>
+              <li>• Different empty state messages</li>
+              <li>• Same layout and information</li>
+            </ul>
+          </div>
+          
+          <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-yellow-700 mb-3">Empty States</h4>
+            <ul class="text-xs text-yellow-800 space-y-1">
+              <li>• Empty favorites: "User hasn't added favorites yet"</li>
+              <li>• Empty journal: "User hasn't logged any content yet"</li>
+              <li>• No bio: Simply not displayed</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-PROF-04: User Search -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-PROF-04">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-PROF-04</span>
+            <h2 class="text-lg font-bold text-gray-900">User Search</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-PROF-04', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-PROF-04', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-PROF-04', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-PROF-04', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-PROF-04', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (No query yet) -->
+              <div data-state="empty">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Find Users</h1>
+                  
+                  <div class="mb-8">
+                    <div class="flex gap-3">
+                      <input type="text" placeholder="Search by username..." class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                      <button class="btn btn-primary">Search</button>
+                    </div>
+                  </div>
+                  
+                  <div class="text-center py-12">
+                    <div class="text-5xl mb-4">👥</div>
+                    <p class="text-gray-600">Enter a username to search for users.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Results found) -->
+              <div data-state="populated" class="visible">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Find Users</h1>
+                  
+                  <div class="mb-6">
+                    <div class="flex gap-3">
+                      <input type="text" value="seoul" placeholder="Search by username..." class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                      <button class="btn btn-primary">Search</button>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2">3 users found for "<strong>seoul</strong>"</p>
+                  </div>
+                  
+                  <div class="space-y-4">
+                    <!-- User Card 1 -->
+                    <a href="#S-PROF-03" class="user-card block">
+                      <div class="avatar" style="background: #8b5cf6;">S</div>
+                      <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">seoul_drama_lover</h3>
+                        <p class="text-sm text-gray-600 line-clamp-1">Romance & Melodrama addict 🌸 | Always looking for...</p>
+                      </div>
+                    </a>
+                    
+                    <!-- User Card 2 -->
+                    <a href="#S-PROF-03" class="user-card block">
+                      <div class="avatar" style="background: #22c55e;">J</div>
+                      <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">seoul_journey</h3>
+                        <p class="text-sm text-gray-600 line-clamp-1">K-drama fan since 2019 | Thriller enthusiast</p>
+                      </div>
+                    </a>
+                    
+                    <!-- User Card 3 -->
+                    <a href="#S-PROF-03" class="user-card block">
+                      <div class="avatar" style="background: #f59e0b;">K</div>
+                      <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">seoul_korea_2024</h3>
+                        <p class="text-sm text-gray-500">No bio yet</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="max-w-lg mx-auto">
+                  <div class="h-8 w-32 skeleton mb-6"></div>
+                  <div class="flex gap-3 mb-6">
+                    <div class="flex-1 h-12 skeleton rounded-lg"></div>
+                    <div class="h-12 w-20 skeleton rounded-lg"></div>
+                  </div>
+                  <div class="space-y-4">
+                    <div class="user-card opacity-50">
+                      <div class="avatar skeleton"></div>
+                      <div class="flex-1">
+                        <div class="h-5 w-36 skeleton mb-2"></div>
+                        <div class="h-4 w-48 skeleton"></div>
+                      </div>
+                    </div>
+                    <div class="user-card opacity-50">
+                      <div class="avatar skeleton"></div>
+                      <div class="flex-1">
+                        <div class="h-5 w-36 skeleton mb-2"></div>
+                        <div class="h-4 w-48 skeleton"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Find Users</h1>
+                  
+                  <div class="flex gap-3 mb-6">
+                    <input type="text" value="seoul" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                  
+                  <div class="error-state py-8">
+                    <div class="error-state-icon">⚠️</div>
+                    <div class="error-state-title">Search failed.</div>
+                    <div class="error-state-description">Please try again.</div>
+                    <button class="error-state-cta">Retry</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (No results) -->
+              <div data-state="success">
+                <div class="max-w-lg mx-auto">
+                  <h1 class="text-2xl font-bold text-gray-900 mb-6">Find Users</h1>
+                  
+                  <div class="flex gap-3 mb-6">
+                    <input type="text" value="xyznonexistent" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                  
+                  <div class="text-center py-12">
+                    <div class="text-5xl mb-4">🔍</div>
+                    <p class="text-gray-600 font-semibold mb-2">No users found for "xyznonexistent".</p>
+                    <p class="text-sm text-gray-500">Try a different search term.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Navigation</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">User Search</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">User Profile</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Navigation menu<br>
+            <strong>→ To:</strong> <a href="#S-PROF-03" class="text-blue-600">S-PROF-03</a> (User Profile)<br><br>
+            <strong>Search scope:</strong> Username only (case-insensitive)<br>
+            <strong>Results limit:</strong> Top 10 matches
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Quick search with immediate results. One click to profile. Bio snippet provides context for disambiguation."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/users/search?q={query}<br>
+            <strong>Search field:</strong> Username (case-insensitive, partial match)<br>
+            <strong>Limit:</strong> 10 results max<br>
+            <strong>Response:</strong> Username, avatar_url, bio (truncated to 50 chars)
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Search input, Result cards, Username</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Bio snippet, Avatar</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-blue-700 mb-3">Search Behavior</h4>
+            <ul class="text-xs text-blue-800 space-y-1">
+              <li>• Username-only search</li>
+              <li>• Case-insensitive matching</li>
+              <li>• Partial matches supported</li>
+              <li>• Bio truncated to 50 chars</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+    <p>K-Journal Wireframes | Wave 4: User Profiles & Social Discovery | <a href="index.html" class="text-blue-600 hover:underline">Back to Index</a></p>
+  </footer>
+
+  <script>
+    // State switching functionality
+    function showState(screenId, state, btn) {
+      const container = document.getElementById(screenId);
+      if (!container) return;
+      
+      container.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      container.querySelectorAll('[data-state]').forEach(el => {
+        el.classList.remove('visible');
+      });
+      const targetState = container.querySelector(`[data-state="${state}"]`);
+      if (targetState) {
+        targetState.classList.add('visible');
+      }
+    }
+  </script>
+</body>
+</html>

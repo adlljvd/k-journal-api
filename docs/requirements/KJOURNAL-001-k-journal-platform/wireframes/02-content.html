@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Journal - Content Catalog Wireframes</title>
+  <link rel="stylesheet" href="_shared.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Content Card Styles */
+    .content-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-wire-border);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .content-card-poster {
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 48px;
+    }
+    .content-card-body {
+      padding: 12px;
+    }
+    .content-card-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-wire-text);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .content-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-wire-muted);
+    }
+    
+    /* Rating Stars */
+    .rating-stars {
+      color: #f59e0b;
+      letter-spacing: -2px;
+    }
+    
+    /* Featured Hero */
+    .featured-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      border-radius: 16px;
+      padding: 32px;
+      color: white;
+      margin-bottom: 32px;
+    }
+    
+    /* Filter Bar */
+    .filter-bar {
+      background: white;
+      border: 1px solid var(--border-wire-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    /* Poster Large */
+    .poster-large {
+      width: 200px;
+      aspect-ratio: 2/3;
+      background: #f1f5f9;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 64px;
+      flex-shrink: 0;
+    }
+    
+    /* Journal Entry Card */
+    .journal-entry-preview {
+      background: var(--color-info-bg);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 16px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  
+  <!-- Navigation Bar (Logged In State) -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="logo">K</div>
+      <span>K-Journal</span>
+    </a>
+    <div class="navbar-center">
+      <input type="text" class="search-bar" placeholder="Search for K-dramas, K-movies...">
+    </div>
+    <div class="navbar-right">
+      <a href="03-journal.html#S-JRN-01" class="text-sm font-semibold text-gray-700 hover:text-blue-600">My Journal</a>
+      <div class="flex items-center gap-2 ml-4">
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold text-sm">K</div>
+        <div class="relative group">
+          <button class="text-sm text-gray-600">▼</button>
+          <!-- Dropdown would go here -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    
+    <!-- Module Header -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-sm font-mono font-bold text-green-600">WAVE 2</span>
+        <h1 class="text-2xl font-bold text-gray-900">Content Catalog & Discovery</h1>
+      </div>
+      <p class="text-gray-600">Homepage, catalog browsing, search, and content details</p>
+      <div class="mt-3 flex gap-2">
+        <span class="badge badge-success">CONTENT</span>
+        <span class="badge badge-info">4 Screens</span>
+        <span class="badge badge-neutral">All Roles</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-01: Homepage -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-01">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-01</span>
+            <h2 class="text-lg font-bold text-gray-900">Homepage</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-CAT-01', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-CAT-01', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-01', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-01', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-01', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🎬</div>
+                  <div class="empty-state-title">No featured content yet.</div>
+                  <div class="empty-state-description">Check back soon for curated K-drama and K-movie picks!</div>
+                  <a href="#S-CAT-02" class="empty-state-cta">Browse All Content</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <!-- Featured Hero Section -->
+                <div class="featured-hero">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="text-yellow-400">⭐</span>
+                    <span class="text-sm font-semibold uppercase tracking-wide">Featured</span>
+                  </div>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Featured Card 1 -->
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Crash Landing on You</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info">Drama</span>
+                          <span>2019</span>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Featured Card 2 -->
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Parasite</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-purple">Movie</span>
+                          <span>2019</span>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Featured Card 3 -->
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Squid Game</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info">Drama</span>
+                          <span>2021</span>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Featured Card 4 -->
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Train to Busan</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-purple">Movie</span>
+                          <span>2016</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                
+                <!-- Browse All CTA -->
+                <div class="text-center mb-8">
+                  <a href="#S-CAT-02" class="btn btn-primary btn-lg">
+                    Browse All Content →
+                  </a>
+                </div>
+                
+                <!-- Recently Added Section -->
+                <div class="mb-8">
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Recently Added</h2>
+                  <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">My Demon</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info text-xs">Drama</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">The Glory</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info text-xs">Drama</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Decision to Leave</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-purple text-xs">Movie</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Extraordinary Attorney Woo</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info text-xs">Drama</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Kill Boksoon</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-purple text-xs">Movie</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Moving</div>
+                        <div class="content-card-meta">
+                          <span class="badge badge-info text-xs">Drama</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                
+                <!-- Top Rated Section -->
+                <div>
+                  <h2 class="text-lg font-bold text-gray-900 mb-4">Top Rated</h2>
+                  <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Reply 1988</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★★</span>
+                          <span>4.9</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">My Mister</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★★</span>
+                          <span>4.8</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Goblin</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★★</span>
+                          <span>4.8</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Parasite</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★★</span>
+                          <span>4.7</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Itaewon Class</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★☆</span>
+                          <span>4.6</span>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#S-CAT-03" class="content-card">
+                      <div class="content-card-poster text-3xl">🎬</div>
+                      <div class="content-card-body">
+                        <div class="content-card-title">Hospital Playlist</div>
+                        <div class="content-card-meta">
+                          <span class="rating-stars">★★★★☆</span>
+                          <span>4.6</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <!-- Featured Skeleton -->
+                <div class="featured-hero opacity-50">
+                  <div class="h-6 w-32 skeleton mb-4"></div>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  </div>
+                </div>
+                
+                <!-- CTA Skeleton -->
+                <div class="text-center mb-8">
+                  <div class="h-12 w-48 skeleton rounded-lg inline-block"></div>
+                </div>
+                
+                <!-- Section Skeletons -->
+                <div class="mb-8">
+                  <div class="h-6 w-36 skeleton mb-4"></div>
+                  <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="h-6 w-28 skeleton mb-4"></div>
+                  <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load content.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta" onclick="location.reload()">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After search or action) -->
+              <div data-state="success">
+                <div class="featured-hero">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="text-yellow-400">⭐</span>
+                    <span class="text-sm font-semibold uppercase tracking-wide">Featured</span>
+                  </div>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-50">
+                    <div class="aspect-[2/3] bg-white/20 rounded-lg"></div>
+                    <div class="aspect-[2/3] bg-white/20 rounded-lg"></div>
+                    <div class="aspect-[2/3] bg-white/20 rounded-lg"></div>
+                    <div class="aspect-[2/3] bg-white/20 rounded-lg"></div>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Welcome to K-Journal!</div>
+                      <div class="toast-message">Start tracking your K-drama journey today.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="text-center mb-8">
+                  <a href="#S-CAT-02" class="btn btn-primary btn-lg">Browse All Content →</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Homepage</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+              <span class="text-gray-400">or</span>
+              <span class="text-gray-400">Catalog</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Logo click, Direct URL<br>
+            <strong>→ To:</strong> <a href="#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail), <a href="#S-CAT-02" class="text-blue-600">S-CAT-02</a> (Catalog), <a href="#S-CAT-04" class="text-blue-600">S-CAT-04</a> (Search)<br><br>
+            <strong>Primary actions:</strong> Browse featured, Search for title<br>
+            <strong>Secondary actions:</strong> View recent/top rated
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Progressive Disclosure principle applied - Featured content shown prominently in hero section to engage immediately. Secondary sections (Recent, Top Rated) below fold for returning users seeking variety."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/content/featured, GET /api/content?sort=recent&limit=6, GET /api/content?sort=rating&minLogged=5&limit=6<br>
+            <strong>Caching:</strong> Featured cached for 1 hour, recent/top for 5 minutes<br>
+            <strong>Content card:</strong> Reusable component across all catalog screens
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Featured cards, Search bar</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Recently Added, Top Rated</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-02: Content Catalog -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-02">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-02</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Catalog</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-CAT-02', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-CAT-02', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-02', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-02', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-02', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">📭</div>
+                  <div class="empty-state-title">No content found.</div>
+                  <div class="empty-state-description">Try adjusting your filters.</div>
+                  <button class="empty-state-cta">Clear Filters</button>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE -->
+              <div data-state="populated" class="visible">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                  <div>
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">Type</label>
+                    <select class="border rounded-lg px-3 py-2 text-sm">
+                      <option value="">All</option>
+                      <option value="drama">Drama</option>
+                      <option value="movie">Movie</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">Genre</label>
+                    <select class="border rounded-lg px-3 py-2 text-sm">
+                      <option value="">All Genres</option>
+                      <option value="romance">Romance</option>
+                      <option value="thriller">Thriller</option>
+                      <option value="comedy">Comedy</option>
+                      <option value="drama">Drama</option>
+                      <option value="action">Action</option>
+                      <option value="fantasy">Fantasy</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">Sort By</label>
+                    <select class="border rounded-lg px-3 py-2 text-sm">
+                      <option value="title">Title (A-Z)</option>
+                      <option value="year">Year (Newest)</option>
+                      <option value="rating">Rating (Highest)</option>
+                    </select>
+                  </div>
+                  <div class="ml-auto">
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">&nbsp;</label>
+                    <button class="btn btn-secondary btn-sm">Clear Filters</button>
+                  </div>
+                </div>
+                
+                <!-- Results Count -->
+                <div class="text-sm text-gray-600 mb-4">
+                  Showing <strong>1-20</strong> of <strong>87</strong> titles
+                </div>
+                
+                <!-- Content Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
+                  <!-- Content Cards -->
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Crash Landing on You</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2019</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★★</span>
+                        <span>4.8</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Parasite</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-purple text-xs">Movie</span>
+                        <span>2019</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★★</span>
+                        <span>4.7</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Squid Game</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2021</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★☆</span>
+                        <span>4.5</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Goblin</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2016</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★★</span>
+                        <span>4.8</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Reply 1988</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2015</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★★</span>
+                        <span>4.9</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Train to Busan</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-purple text-xs">Movie</span>
+                        <span>2016</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★☆</span>
+                        <span>4.6</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">My Demon</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2023</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★☆</span>
+                        <span>4.3</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">The Glory</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2022</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★★</span>
+                        <span>4.7</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Itaewon Class</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2020</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★☆</span>
+                        <span>4.6</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <a href="#S-CAT-03" class="content-card">
+                    <div class="content-card-poster">🎬</div>
+                    <div class="content-card-body">
+                      <div class="content-card-title">Hospital Playlist</div>
+                      <div class="content-card-meta">
+                        <span class="badge badge-info text-xs">Drama</span>
+                        <span>2020</span>
+                      </div>
+                      <div class="content-card-meta mt-1">
+                        <span class="rating-stars">★★★★☆</span>
+                        <span>4.6</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-center items-center gap-2">
+                  <button class="btn btn-secondary btn-sm" disabled>← Prev</button>
+                  <span class="px-3 py-1 bg-blue-600 text-white rounded text-sm font-semibold">1</span>
+                  <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">2</span>
+                  <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">3</span>
+                  <span class="px-3 py-1 text-gray-400">...</span>
+                  <span class="px-3 py-1 hover:bg-gray-100 rounded text-sm cursor-pointer">5</span>
+                  <button class="btn btn-secondary btn-sm">Next →</button>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="filter-bar opacity-50">
+                  <div class="h-10 w-24 skeleton rounded"></div>
+                  <div class="h-10 w-32 skeleton rounded"></div>
+                  <div class="h-10 w-28 skeleton rounded"></div>
+                </div>
+                <div class="h-5 w-36 skeleton mb-4"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                  <div class="aspect-[2/3] skeleton rounded-lg"></div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load content.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After filter applied) -->
+              <div data-state="success">
+                <div class="filter-bar">
+                  <div>
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">Type</label>
+                    <select class="border rounded-lg px-3 py-2 text-sm bg-blue-50 border-blue-300">
+                      <option value="drama" selected>Drama</option>
+                      <option value="movie">Movie</option>
+                    </select>
+                  </div>
+                  <div class="opacity-50">
+                    <label class="text-xs font-semibold text-gray-500 block mb-1">Genre</label>
+                    <select class="border rounded-lg px-3 py-2 text-sm">
+                      <option value="">All Genres</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Filters Applied</div>
+                      <div class="toast-message">Showing 42 K-dramas</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 opacity-50">
+                  <div class="aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                  <div class="aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                  <div class="aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                  <div class="aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                  <div class="aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Homepage</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Catalog</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-CAT-01" class="text-blue-600">S-CAT-01</a> (Homepage "Browse All"), Navigation<br>
+            <strong>→ To:</strong> <a href="#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail)<br><br>
+            <strong>Filter behavior:</strong> Updates URL for shareability, persists in session<br>
+            <strong>Pagination:</strong> 20 items per page
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Efficiency for Frequent Tasks principle - Filters and sort easily accessible at top. Grid layout shows key info at a glance (poster, title, rating). Entire card clickable for larger touch target."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/content?type=&genres=&sort=&page=<br>
+            <strong>Query params:</strong><br>
+            - type: 'drama' | 'movie' | undefined<br>
+            - genres: comma-separated genre IDs<br>
+            - sort: 'title' | 'year' | 'rating'<br>
+            - page: number (default 1)<br>
+            <strong>Response:</strong> 20 items per page with total count
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Content grid (cards)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Filter controls, Sort control</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Pagination</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-03: Content Detail -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-03">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-03</span>
+            <h2 class="text-lg font-bold text-gray-900">Content Detail</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-CAT-03', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-CAT-03', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-03', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-03', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-03', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 600px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (No content found) -->
+              <div data-state="empty">
+                <div class="empty-state py-16">
+                  <div class="empty-state-icon">🎬</div>
+                  <div class="empty-state-title">Content not found.</div>
+                  <div class="empty-state-description">This title may have been removed or the link is incorrect.</div>
+                  <a href="#S-CAT-02" class="empty-state-cta">Browse Catalog</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Logged in, not in journal) -->
+              <div data-state="populated" class="visible">
+                <div class="flex gap-8">
+                  <!-- Poster -->
+                  <div class="poster-large">🎬</div>
+                  
+                  <!-- Content Info -->
+                  <div class="flex-1">
+                    <div class="flex items-start gap-3 mb-4">
+                      <h1 class="text-2xl font-bold text-gray-900">Crash Landing on You</h1>
+                      <span class="badge badge-info">Drama</span>
+                      <span class="text-gray-500">2019</span>
+                    </div>
+                    
+                    <!-- Rating -->
+                    <div class="flex items-center gap-3 mb-4">
+                      <span class="rating-stars text-xl">★★★★★</span>
+                      <span class="font-semibold">4.8</span>
+                      <span class="text-gray-500 text-sm">(127 ratings)</span>
+                    </div>
+                    
+                    <!-- Genres -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Romance</span>
+                      <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Comedy</span>
+                      <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Drama</span>
+                    </div>
+                    
+                    <!-- Synopsis -->
+                    <div class="mb-6">
+                      <h3 class="font-semibold text-gray-700 mb-2">Synopsis</h3>
+                      <p class="text-gray-600 text-sm leading-relaxed">
+                        A South Korean heiress crash-lands in North Korea after a paragliding accident and falls in love with a North Korean army officer. As they navigate their forbidden romance, they discover that love can transcend borders and politics.
+                      </p>
+                    </div>
+                    
+                    <!-- Meta Info -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+                      <div>
+                        <span class="text-gray-500">Episodes:</span>
+                        <span class="font-medium ml-2">16</span>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Country:</span>
+                        <span class="font-medium ml-2">South Korea</span>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Cast:</span>
+                        <span class="font-medium ml-2">Hyun Bin, Son Ye-jin, Seo Ji-hye</span>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Users logged:</span>
+                        <span class="font-medium ml-2">89</span>
+                      </div>
+                    </div>
+                    
+                    <!-- Add to Journal Button (Logged in, not in journal) -->
+                    <a href="03-journal.html#S-JRN-02" class="btn btn-primary btn-lg">
+                      Add to My Journal
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="flex gap-8">
+                  <div class="poster-large skeleton"></div>
+                  <div class="flex-1">
+                    <div class="h-8 w-64 skeleton mb-4"></div>
+                    <div class="h-5 w-32 skeleton mb-4"></div>
+                    <div class="flex gap-2 mb-4">
+                      <div class="h-6 w-20 skeleton rounded-full"></div>
+                      <div class="h-6 w-20 skeleton rounded-full"></div>
+                      <div class="h-6 w-20 skeleton rounded-full"></div>
+                    </div>
+                    <div class="h-4 w-full skeleton mb-2"></div>
+                    <div class="h-4 w-full skeleton mb-2"></div>
+                    <div class="h-4 w-3/4 skeleton mb-6"></div>
+                    <div class="h-12 w-48 skeleton rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="error-state py-16">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Unable to load content.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (Logged in, already in journal) -->
+              <div data-state="success">
+                <div class="flex gap-8">
+                  <div class="poster-large">🎬</div>
+                  
+                  <div class="flex-1">
+                    <div class="flex items-start gap-3 mb-4">
+                      <h1 class="text-2xl font-bold text-gray-900">Crash Landing on You</h1>
+                      <span class="badge badge-info">Drama</span>
+                      <span class="text-gray-500">2019</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 mb-4">
+                      <span class="rating-stars text-xl">★★★★★</span>
+                      <span class="font-semibold">4.8</span>
+                      <span class="text-gray-500 text-sm">(127 ratings)</span>
+                    </div>
+                    
+                    <!-- User's Journal Entry -->
+                    <div class="journal-entry-preview mb-6">
+                      <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-semibold text-blue-900">Your Journal Entry</h3>
+                        <a href="03-journal.html#S-JRN-02" class="btn btn-secondary btn-sm">Edit Entry</a>
+                      </div>
+                      <div class="flex items-center gap-4 text-sm">
+                        <span class="badge badge-watching">WATCHING</span>
+                        <div class="flex items-center gap-1">
+                          <span class="rating-stars">★★★★★</span>
+                          <span class="font-medium">5.0</span>
+                        </div>
+                        <span class="text-red-500">❤️ Favorite</span>
+                      </div>
+                      <p class="text-gray-600 text-sm mt-3 italic">
+                        "One of the best K-dramas I've ever watched. The chemistry between the leads is amazing!"
+                      </p>
+                    </div>
+                    
+                    <!-- Synopsis -->
+                    <div class="mb-6">
+                      <h3 class="font-semibold text-gray-700 mb-2">Synopsis</h3>
+                      <p class="text-gray-600 text-sm leading-relaxed">
+                        A South Korean heiress crash-lands in North Korea after a paragliding accident...
+                      </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6 text-sm opacity-50">
+                      <div><span class="text-gray-500">Episodes:</span> <span class="font-medium ml-2">16</span></div>
+                      <div><span class="text-gray-500">Country:</span> <span class="font-medium ml-2">South Korea</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Catalog/Search</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Content Detail</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Journal Entry</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> <a href="#S-CAT-02" class="text-blue-600">S-CAT-02</a>, <a href="#S-CAT-04" class="text-blue-600">S-CAT-04</a>, Profile pages<br>
+            <strong>→ To:</strong> <a href="03-journal.html#S-JRN-02" class="text-blue-600">S-JRN-02</a> (Journal Entry Form), <a href="01-auth.html#S-AUTH-02" class="text-blue-600">S-AUTH-02</a> (Login for guests)<br><br>
+            <strong>Guest action:</strong> "Log in to add to your journal"<br>
+            <strong>Logged in (not tracked):</strong> "Add to My Journal"<br>
+            <strong>Logged in (tracked):</strong> Shows journal entry preview with "Edit" button
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Recognition over Recall principle - If user has already added this content, show their current entry status prominently. This prevents confusion and allows quick editing without navigation."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/content/{slug}<br>
+            <strong>Auth check:</strong> If logged in, also fetch user's journal entry for this content<br>
+            <strong>Poster:</strong> Display placeholder if poster_url is null<br>
+            <strong>Rating:</strong> Calculate avg_rating and total_ratings from journal entries
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Title, Poster, Watch status, Add to Journal button</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-neutral">SECONDARY</span>
+                <span>Synopsis, Type/Year, Genres, Avg rating</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-danger">TERTIARY</span>
+                <span>Cast, Episodes/Duration, Country, Total logged</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-blue-700 mb-3">Guest State Variant</h4>
+            <div class="text-sm text-blue-800">
+              <p class="mb-2">For guests, the primary action shows:</p>
+              <code class="bg-white px-2 py-1 rounded text-xs">"Log in to add to your journal"</code>
+              <p class="mt-2 text-xs text-blue-600">Links to S-AUTH-02 (Login page)</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- S-CAT-04: Search Results -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    
+    <div class="screen-container" id="S-CAT-04">
+      <div class="screen-header">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-mono font-bold text-blue-600">S-CAT-04</span>
+            <h2 class="text-lg font-bold text-gray-900">Search Results</h2>
+            <span class="badge badge-neutral">All Roles</span>
+          </div>
+          <div class="text-xs text-gray-500 mt-1">🖥️ Desktop / 📱 Mobile</div>
+        </div>
+        <div class="state-controls">
+          <button class="state-btn" onclick="showState('S-CAT-04', 'empty', this)">Empty</button>
+          <button class="state-btn active" onclick="showState('S-CAT-04', 'populated', this)">Populated</button>
+          <button class="state-btn" onclick="showState('S-CAT-04', 'loading', this)">Loading</button>
+          <button class="state-btn" onclick="showState('S-CAT-04', 'error', this)">Error</button>
+          <button class="state-btn" onclick="showState('S-CAT-04', 'success', this)">Success</button>
+        </div>
+      </div>
+
+      <div class="screen-layout">
+        <div class="screen-canvas">
+          <div class="wireframe-box" style="min-height: 500px;">
+            <div class="wireframe-content">
+              
+              <!-- EMPTY STATE (No results) -->
+              <div data-state="empty">
+                <div class="mb-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <input type="text" value="sky castle" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm" placeholder="Search...">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+                
+                <div class="empty-state py-12">
+                  <div class="empty-state-icon">🔍</div>
+                  <div class="empty-state-title">No results for "sky castle".</div>
+                  <div class="empty-state-description">Try a different search or request this title to be added.</div>
+                  <a href="03-journal.html#S-CAT-05" class="empty-state-cta">Request This Title</a>
+                </div>
+              </div>
+
+              <!-- POPULATED STATE (Results found) -->
+              <div data-state="populated" class="visible">
+                <div class="mb-6">
+                  <div class="flex items-center gap-3 mb-2">
+                    <input type="text" value="crash" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm" placeholder="Search...">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                  <p class="text-sm text-gray-600">Results for "<strong>crash</strong>" — 3 titles found</p>
+                </div>
+                
+                <!-- Results List -->
+                <div class="space-y-4">
+                  <!-- Result Item 1 -->
+                  <a href="#S-CAT-03" class="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="w-20 aspect-[2/3] bg-gray-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">🎬</div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">Crash Landing on You</h3>
+                      <div class="flex items-center gap-3 text-sm text-gray-600 mb-2">
+                        <span class="badge badge-info">Drama</span>
+                        <span>2019</span>
+                        <span>16 episodes</span>
+                      </div>
+                      <p class="text-sm text-gray-500 line-clamp-2">
+                        A South Korean heiress crash-lands in North Korea after a paragliding accident...
+                      </p>
+                      <div class="flex items-center gap-2 mt-2">
+                        <span class="rating-stars text-sm">★★★★★</span>
+                        <span class="text-sm font-medium">4.8</span>
+                        <span class="text-sm text-gray-400">(127 ratings)</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <!-- Result Item 2 -->
+                  <a href="#S-CAT-03" class="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="w-20 aspect-[2/3] bg-gray-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">🎬</div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">Crash</h3>
+                      <div class="flex items-center gap-3 text-sm text-gray-600 mb-2">
+                        <span class="badge badge-purple">Movie</span>
+                        <span>2004</span>
+                        <span>112 min</span>
+                      </div>
+                      <p class="text-sm text-gray-500 line-clamp-2">
+                        Los Angeles citizens with vastly separate lives collide in interweaving stories...
+                      </p>
+                      <div class="flex items-center gap-2 mt-2">
+                        <span class="rating-stars text-sm">★★★★☆</span>
+                        <span class="text-sm font-medium">4.2</span>
+                        <span class="text-sm text-gray-400">(23 ratings)</span>
+                      </div>
+                    </div>
+                  </a>
+                  
+                  <!-- Result Item 3 -->
+                  <a href="#S-CAT-03" class="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:shadow-md transition-shadow">
+                    <div class="w-20 aspect-[2/3] bg-gray-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">🎬</div>
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">Crash Course in Romance</h3>
+                      <div class="flex items-center gap-3 text-sm text-gray-600 mb-2">
+                        <span class="badge badge-info">Drama</span>
+                        <span>2023</span>
+                        <span>16 episodes</span>
+                      </div>
+                      <p class="text-sm text-gray-500 line-clamp-2">
+                        A former national athlete and a star math instructor find love in unexpected ways...
+                      </p>
+                      <div class="flex items-center gap-2 mt-2">
+                        <span class="rating-stars text-sm">★★★★☆</span>
+                        <span class="text-sm font-medium">4.1</span>
+                        <span class="text-sm text-gray-400">(18 ratings)</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- LOADING STATE -->
+              <div data-state="loading">
+                <div class="mb-6">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="flex-1 h-12 skeleton rounded-lg"></div>
+                    <div class="h-12 w-20 skeleton rounded-lg"></div>
+                  </div>
+                  <div class="h-5 w-48 skeleton"></div>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="flex gap-4 p-4">
+                    <div class="w-20 aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-1"></div>
+                      <div class="h-4 w-3/4 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 p-4">
+                    <div class="w-20 aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-1"></div>
+                      <div class="h-4 w-3/4 skeleton"></div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 p-4">
+                    <div class="w-20 aspect-[2/3] skeleton rounded-lg"></div>
+                    <div class="flex-1">
+                      <div class="h-5 w-48 skeleton mb-2"></div>
+                      <div class="h-4 w-32 skeleton mb-2"></div>
+                      <div class="h-4 w-full skeleton mb-1"></div>
+                      <div class="h-4 w-3/4 skeleton"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ERROR STATE -->
+              <div data-state="error">
+                <div class="mb-6">
+                  <div class="flex items-center gap-3 mb-2">
+                    <input type="text" value="crash" class="flex-1 border border-red-300 rounded-lg px-4 py-3 text-sm bg-red-50" placeholder="Search...">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+                
+                <div class="error-state py-12">
+                  <div class="error-state-icon">⚠️</div>
+                  <div class="error-state-title">Search failed.</div>
+                  <div class="error-state-description">Please try again.</div>
+                  <button class="error-state-cta">Retry</button>
+                </div>
+              </div>
+
+              <!-- SUCCESS STATE (After successful search) -->
+              <div data-state="success">
+                <div class="mb-6">
+                  <div class="flex items-center gap-3 mb-2">
+                    <input type="text" value="goblin" class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-sm" placeholder="Search...">
+                    <button class="btn btn-primary">Search</button>
+                  </div>
+                </div>
+                
+                <div class="toast-container" style="position: relative; top: 0; right: 0; margin-bottom: 16px;">
+                  <div class="toast">
+                    <div class="toast-icon">✅</div>
+                    <div class="toast-content">
+                      <div class="toast-title">Found 1 result</div>
+                      <div class="toast-message">for "goblin"</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4 p-4 bg-white border border-gray-200 rounded-xl opacity-50">
+                  <div class="w-20 aspect-[2/3] bg-gray-100 rounded-lg"></div>
+                  <div class="flex-1">
+                    <div class="h-5 w-32 bg-gray-100 rounded mb-2"></div>
+                    <div class="h-4 w-24 bg-gray-100 rounded mb-2"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+        <!-- Screen Context / Annotations -->
+        <div class="screen-context">
+          
+          <div class="journey-strip">
+            <strong>JOURNEY STRIP</strong>
+            <div class="flex items-center gap-3 text-xs font-bold flex-wrap">
+              <span class="text-gray-400">Search Bar</span>
+              <span class="text-gray-400">→</span>
+              <span class="bg-blue-600 text-white px-2 py-1 rounded">Search Results</span>
+              <span class="text-gray-400">→</span>
+              <span class="text-gray-400">Content Detail</span>
+            </div>
+          </div>
+          
+          <div class="flow-connection">
+            <strong>FLOW_CONNECTION</strong>
+            <strong>← From:</strong> Search bar (any page)<br>
+            <strong>→ To:</strong> <a href="#S-CAT-03" class="text-blue-600">S-CAT-03</a> (Content Detail), <a href="03-journal.html#S-CAT-05" class="text-blue-600">S-CAT-05</a> (Content Request if no results)<br><br>
+            <strong>No results:</strong> Show message + "Request This Title" CTA<br>
+            <strong>Debounce:</strong> 300ms delay before search executes
+          </div>
+          
+          <div class="ux-note">
+            <strong>UX_NOTE</strong>
+            "Meaningful Empty States principle - When no results, provide clear path forward (Request content). Don't leave users stranded; give them an action to take. The 'Request This Title' link passes the search query to pre-fill the request form."
+          </div>
+          
+          <div class="dev-note">
+            <strong>DEV_NOTE</strong>
+            <strong>API:</strong> GET /api/content/search?q={query}<br>
+            <strong>Search scope:</strong> Title field only (case-insensitive, partial match)<br>
+            <strong>Limit:</strong> Top 10 results shown on page<br>
+            <strong>URL:</strong> /search?q={query} (shareable)<br>
+            <strong>Request link:</strong> Passes query as title param to form
+          </div>
+          
+          <div class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-gray-500 mb-3">Field Hierarchy</h4>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="badge badge-info">PRIMARY</span>
+                <span>Search query, Result cards, No results message, Request CTA</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-yellow-700 mb-3">Search Behavior</h4>
+            <ul class="text-sm text-yellow-800 space-y-1">
+              <li>• Debounce: 300ms after last keystroke</li>
+              <li>• Scope: Title field only</li>
+              <li>• Dropdown: Top 10 quick results</li>
+              <li>• Full page: "See all results" link</li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 py-6 text-center text-sm text-gray-500">
+    <p>K-Journal Wireframes | Wave 2: Content Catalog & Discovery | <a href="index.html" class="text-blue-600 hover:underline">Back to Index</a></p>
+  </footer>
+
+  <script>
+    // State switching functionality
+    function showState(screenId, state, btn) {
+      const container = document.getElementById(screenId);
+      if (!container) return;
+      
+      container.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      container.querySelectorAll('[data-state]').forEach(el => {
+        el.classList.remove('visible');
+      });
+      const targetState = container.querySelector(`[data-state="${state}"]`);
+      if (targetState) {
+        targetState.classList.add('visible');
+      }
+    }
+  </script>
+</body>
+</html>
